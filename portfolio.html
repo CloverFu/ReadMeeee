@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rongmei Fu | Ph.D. Candidate in Agricultural Engineering</title>
+<style>
+:root {
+  --primary: #1a365d;
+  --primary-light: #2e5984;
+  --accent: #2d8659;
+  --accent-light: #3cb371;
+  --bg: #f7f9fc;
+  --card-bg: #ffffff;
+  --text: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  --border: #e2e8f0;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --gradient: linear-gradient(135deg, #1a365d 0%, #2e5984 50%, #2d8659 100%);
+  --gradient-card: linear-gradient(135deg, #f0f4f8 0%, #e6f4ea 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.navbar .logo {
+  font-weight: 700; font-size: 18px; color: var(--primary);
+  display: flex; align-items: center; gap: 10px;
+}
+.navbar .logo .dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--gradient);
+}
+.navbar .nav-links { display: flex; gap: 28px; align-items: center; }
+.navbar .nav-links a {
+  text-decoration: none; color: var(--text-secondary); font-size: 15px; font-weight: 500;
+  transition: color 0.2s;
+}
+.navbar .nav-links a:hover { color: var(--primary); }
+.lang-toggle {
+  background: var(--gradient);
+  border: none; color: #fff; padding: 6px 16px;
+  border-radius: 20px; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+}
+.lang-toggle:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,54,93,0.3); }
+
+/* ===== Hero ===== */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  padding: 80px 24px 60px;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--gradient);
+  opacity: 0.95;
+}
+.hero::after {
+  content: '';
+  position: absolute; top: -50%; right: -10%;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(60,179,113,0.25) 0%, transparent 70%);
+}
+.hero-content {
+  position: relative; z-index: 2; text-align: center; color: #fff;
+  max-width: 900px;
+}
+.hero-avatar {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 3px solid rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28px;
+  font-size: 48px; font-weight: 700; color: #fff;
+  backdrop-filter: blur(10px);
+}
+.hero h1 {
+  font-size: 42px; font-weight: 800; margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+.hero .subtitle {
+  font-size: 20px; opacity: 0.9; margin-bottom: 8px; font-weight: 400;
+}
+.hero .affiliation {
+  font-size: 16px; opacity: 0.75; margin-bottom: 32px;
+}
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+  margin-bottom: 36px;
+}
+.hero-tag {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 6px 16px; border-radius: 20px;
+  font-size: 14px; color: #fff; backdrop-filter: blur(6px);
+}
+.hero-cta {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+}
+.btn {
+  padding: 12px 28px; border-radius: 30px; font-size: 15px; font-weight: 600;
+  text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+}
+.btn-primary {
+  background: #fff; color: var(--primary);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+.btn-outline {
+  background: transparent; color: #fff;
+  border: 2px solid rgba(255,255,255,0.5);
+}
+.btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+
+.scroll-hint {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.6); font-size: 13px;
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-8px); }
+}
+
+/* ===== Sections ===== */
+.section {
+  padding: 80px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-header {
+  text-align: center; margin-bottom: 48px;
+}
+.section-header h2 {
+  font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 8px;
+}
+.section-header .divider {
+  width: 60px; height: 4px; border-radius: 2px;
+  background: var(--gradient); margin: 0 auto;
+}
+.section-header p {
+  color: var(--text-muted); font-size: 15px; margin-top: 12px;
+}
+
+/* ===== About ===== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.about-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.about-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.about-card h3 {
+  font-size: 18px; color: var(--primary); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.about-card h3 .icon { font-size: 22px; }
+.about-card p { color: var(--text-secondary); font-size: 15px; margin-bottom: 8px; }
+.about-card .info-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+}
+.about-card .info-row:last-child { border-bottom: none; }
+.about-card .info-label {
+  font-weight: 600; color: var(--text); min-width: 80px; font-size: 14px;
+}
+.about-card .info-value { color: var(--text-secondary); font-size: 14px; }
+.about-card .info-value a { color: var(--primary-light); text-decoration: none; }
+.about-card .info-value a:hover { text-decoration: underline; }
+
+/* ===== Research Experience ===== */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+}
+.timeline::before {
+  content: '';
+  position: absolute; left: 14px; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary), var(--accent));
+  border-radius: 2px;
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 28px;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute; left: -33px; top: 6px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; border: 3px solid var(--primary);
+  z-index: 2;
+}
+.timeline-item .timeline-date {
+  display: inline-block;
+  background: var(--gradient-card);
+  padding: 4px 12px; border-radius: 12px;
+  font-size: 13px; color: var(--primary); font-weight: 600;
+  margin-bottom: 8px;
+}
+.timeline-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.timeline-card:hover { transform: translateX(4px); box-shadow: var(--shadow-lg); }
+.timeline-card h4 {
+  font-size: 17px; color: var(--primary); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.timeline-card .tag-badge {
+  display: inline-block;
+  padding: 2px 10px; border-radius: 8px;
+  font-size: 12px; font-weight: 600;
+  margin-left: auto;
+}
+.tag-badge.champion { background: #fff3e0; color: #e65100; }
+.tag-badge.intern { background: #e3f2fd; color: #1565c0; }
+.tag-badge.research { background: #e8f5e9; color: #2e7d32; }
+.timeline-card ul {
+  list-style: none; padding: 0;
+}
+.timeline-card li {
+  position: relative;
+  padding-left: 20px; margin-bottom: 8px;
+  color: var(--text-secondary); font-size: 14px; line-height: 1.6;
+}
+.timeline-card li::before {
+  content: '';
+  position: absolute; left: 0; top: 8px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ===== Publications ===== */
+.pub-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.pub-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pub-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.pub-card.accepted { border-left-color: var(--accent); }
+.pub-card.revision { border-left-color: #f57c00; }
+.pub-card .pub-meta {
+  display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;
+}
+.pub-card .pub-type {
+  font-size: 12px; font-weight: 600; padding: 3px 10px;
+  border-radius: 8px; background: var(--gradient-card); color: var(--primary);
+}
+.pub-card .pub-journal {
+  font-size: 13px; color: var(--accent); font-weight: 600;
+}
+.pub-card .pub-if {
+  font-size: 12px; color: var(--text-muted);
+}
+.pub-card h4 {
+  font-size: 15px; color: var(--text); line-height: 1.5; margin-bottom: 8px;
+}
+.pub-card .pub-authors {
+  font-size: 13px; color: var(--text-muted); font-style: italic;
+}
+
+/* ===== Awards ===== */
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.award-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.award-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--gradient);
+}
+.award-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.award-card .award-icon {
+  width: 56px; height: 56px; margin: 0 auto 16px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  background: var(--gradient-card);
+}
+.award-card h4 {
+  font-size: 16px; color: var(--primary); margin-bottom: 6px; line-height: 1.4;
+}
+.award-card p { font-size: 13px; color: var(--text-muted); }
+
+/* ===== Skills ===== */
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.skill-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.skill-card h4 {
+  font-size: 16px; color: var(--primary); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-tag {
+  padding: 5px 12px; border-radius: 8px;
+  font-size: 13px; font-weight: 500;
+  background: var(--gradient-card); color: var(--primary);
+  border: 1px solid rgba(26,54,93,0.08);
+}
+.skill-tag.highlight {
+  background: var(--primary); color: #fff;
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: var(--primary);
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  padding: 40px 24px;
+  font-size: 14px;
+}
+.footer a { color: #fff; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .navbar { padding: 0 16px; }
+  .navbar .nav-links { display: none; }
+  .hero h1 { font-size: 30px; }
+  .hero .subtitle { font-size: 16px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .section { padding: 60px 16px; }
+  .section-header h2 { font-size: 26px; }
+  .timeline { padding-left: 32px; }
+  .timeline-item::before { left: -28px; }
+}
+
+/* ===== Animations ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Hidden by default (language toggle) ===== */
+[data-lang="zh"] { display: none; }
+body.lang-zh [data-lang="zh"] { display: block; }
+body.lang-zh [data-lang="en"] { display: none; }
+body.lang-zh [data-lang="zh"].inline { display: inline; }
+body.lang-en [data-lang="en"].inline { display: inline; }
+</style>
+</head>
+<body class="lang-en">
+
+<!-- ===== Navbar ===== -->
+<nav class="navbar">
+  <div class="logo"><span class="dot"></span> Rongmei Fu</div>
+  <div class="nav-links">
+    <a href="#about"><span data-lang="en" class="inline">About</span><span data-lang="zh" class="inline">关于</span></a>
+    <a href="#research"><span data-lang="en" class="inline">Research</span><span data-lang="zh" class="inline">研究</span></a>
+    <a href="#publications"><span data-lang="en" class="inline">Publications</span><span data-lang="zh" class="inline">论文</span></a>
+    <a href="#awards"><span data-lang="en" class="inline">Awards</span><span data-lang="zh" class="inline">荣誉</span></a>
+    <a href="#skills"><span data-lang="en" class="inline">Skills</span><span data-lang="zh" class="inline">技能</span></a>
+    <a href="#contact"><span data-lang="en" class="inline">Contact</span><span data-lang="zh" class="inline">联系</span></a>
+  </div>
+  <button class="lang-toggle" onclick="toggleLang()">
+    <span data-lang="en" class="inline">中文</span>
+    <span data-lang="zh" class="inline">EN</span>
+  </button>
+</nav>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-avatar">RF</div>
+    <h1>Rongmei Fu <span style="font-size:28px;opacity:0.7;">/ 符容玫</span></h1>
+    <p class="subtitle" data-lang="en">Ph.D. Candidate in Agricultural Engineering</p>
+    <p class="subtitle" data-lang="zh">农业工程博士研究生</p>
+    <p class="affiliation">
+      <span data-lang="en">Zhejiang University · College of Biosystems Engineering and Food Science</span>
+      <span data-lang="zh">浙江大学 · 生物系统工程与食品科学学院</span>
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag" data-lang="en">Controlled-Environment Agriculture</span>
+      <span class="hero-tag" data-lang="zh">受控环境农业</span>
+      <span class="hero-tag" data-lang="en">Crop Growth Modeling</span>
+      <span class="hero-tag" data-lang="zh">作物生长建模</span>
+      <span class="hero-tag" data-lang="en">Digital Twins</span>
+      <span class="hero-tag" data-lang="zh">数字孪生</span>
+      <span class="hero-tag" data-lang="en">Autonomous Greenhouse Control</span>
+      <span class="hero-tag" data-lang="zh">自主温室控制</span>
+      <span class="hero-tag" data-lang="en">LLM/Agent-based Decision Support</span>
+      <span class="hero-tag" data-lang="zh">大模型/智能体决策支持</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">
+        <span data-lang="en" class="inline">Get in Touch</span>
+        <span data-lang="zh" class="inline">联系我</span>
+      </a>
+      <a href="#research" class="btn btn-outline">
+        <span data-lang="en" class="inline">View Research</span>
+        <span data-lang="zh" class="inline">查看研究</span>
+      </a>
+    </div>
+  </div>
+  <div class="scroll-hint">↓</div>
+</section>
+
+<!-- ===== About ===== -->
+<section class="section" id="about">
+  <div class="section-header">
+    <h2 data-lang="en">About Me</h2>
+    <h2 data-lang="zh">关于我</h2>
+    <div class="divider"></div>
+    <p data-lang="en">Bridging mechanistic modeling, AI, and engineering economics for next-generation agriculture.</p>
+    <p data-lang="zh">在机理建模、人工智能与工程经济分析的交叉点，为新一代农业搭建桥梁。</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-card fade-in">
+      <h3><span class="icon">🎓</span> <span data-lang="en" class="inline">Education</span><span data-lang="zh" class="inline">教育背景</span></h3>
+      <div class="info-row">
+        <span class="info-label">Ph.D.</span>
+        <span class="info-value"><span data-lang="en" class="inline">Agricultural Engineering, Zhejiang University</span><span data-lang="zh" class="inline">农业工程，浙江大学</span> (2022–<span data-lang="en" class="inline">Present</span><span data-lang="zh" class="inline">至今</span>)</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">B.S.</span>
+        <span class="info-value"><span data-lang="en" class="inline">Agricultural Engineering, Zhejiang University</span><span data-lang="zh" class="inline">农业工程，浙江大学</span> (2018–2022)</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label"><span data-lang="en" class="inline">Advisor</span><span data-lang="zh" class="inline">导师</span></span>
+        <span class="info-value">Prof. Tao Lin</span>
+      </div>
+    </div>
+    <div class="about-card fade-in">
+      <h3><span class="icon">🔬</span> <span data-lang="en" class="inline">Research Focus</span><span data-lang="zh" class="inline">研究方向</span></h3>
+      <p data-lang="en">I develop process-based crop models, digital twins, and AI-driven decision-support systems for controlled-environment agriculture (CEA). My work integrates mechanistic modeling with machine learning and techno-economic analysis to enable autonomous, optimal, and sustainable plant factory operations.</p>
+      <p data-lang="zh">我致力于为受控环境农业（CEA）开发基于过程的作物模型、数字孪生和AI驱动的决策支持系统。我的工作将机理建模与机器学习、工程经济分析相结合，实现植物工厂的自主化、最优化和可持续运营。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Research Experience ===== -->
+<section class="section" id="research">
+  <div class="section-header">
+    <h2 data-lang="en">Research Experience</h2>
+    <h2 data-lang="zh">研究经历</h2>
+    <div class="divider"></div>
+    <p data-lang="en">From mechanistic models to digital twins to autonomous AI systems.</p>
+    <p data-lang="zh">从机理模型到数字孪生，再到自主AI系统。</p>
+  </div>
+  <div class="timeline">
+    <!-- Huawei -->
+    <div class="timeline-item fade-in">
+      <span class="timeline-date">2026/08 – 2026/10</span>
+      <div class="timeline-card">
+        <h4>Huawei · Multi-Agent / LLM Engineer Intern <span class="tag-badge intern">Intern</span></h4>
+        <ul>
+          <li><span data-lang="en" class="inline">Built a LangGraph-based multi-agent system using an orchestrator-worker pattern for case-based extraction of atomic, reusable capabilities to build standard SOP.</span><span data-lang="zh" class="inline">基于LangGraph构建了orchestrator-worker模式的多智能体系统，通过案例推理提取原子化可复用能力，构建标准作业流程（SOP）。</span></li>
+        </ul>
+      </div>
+    </div>
+    <!-- FSPM -->
+    <div class="timeline-item fade-in">
+      <span class="timeline-date">2026/02 – Present</span>
+      <div class="timeline-card">
+        <h4>StrawberryFSPM: Functional-Structural Digital Twin <span class="tag-badge research">Research</span></h4>
+        <ul>
+          <li><span data-lang="en" class="inline">Developed an end-to-end 3D reconstruction workflow that recovers canopy structure and temporal traits from mobile video streams using 2D Gaussian Splatting.</span><span data-lang="zh" class="inline">开发了端到端3D重建工作流，利用2D高斯泼溅（2D Gaussian Splatting）从移动视频流中恢复冠层结构和时间序列特征。</span></li>
+          <li><span data-lang="en" class="inline">Coupled canopy geometry, ray tracing, and StrawberryGRO into a plant-specific digital twin for simulating light interception and growth response.</span><span data-lang="zh" class="inline">将冠层几何、光线追踪与StrawberryGRO模型耦合，构建植物级数字孪生，用于模拟光截获与生长响应。</span></li>
+        </ul>
+      </div>
+    </div>
+    <!-- GRO-E -->
+    <div class="timeline-item fade-in">
+      <span class="timeline-date">2025/03 – 2026/04</span>
+      <div class="timeline-card">
+        <h4>StrawberryGRO-E: Techno-Economic Management Framework <span class="tag-badge research">Research</span></h4>
+        <ul>
+          <li><span data-lang="en" class="inline">Proposed Simultaneous Active Inflorescences (SAI) as a reproductive-load index to explain yield heterogeneity across 50 plants, 475 inflorescences, and 1,130 fruits.</span><span data-lang="zh" class="inline">提出"同时活性花序数"（SAI）作为生殖负载指数，解释了50株植物、475个花序、1,130个果实的产量异质性。</span></li>
+          <li><span data-lang="en" class="inline">Developed a 365-day techno-economic decision-support framework that translates management strategies into yield, revenue, operating cost, and profit margin, enabling scenario-level comparison and quantitative evaluation of management alternatives.</span><span data-lang="zh" class="inline">开发了365天技术经济决策支持框架，将管理策略转化为产量、收入、运营成本和利润率，实现场景级方案比较与定量评估。</span></li>
+        </ul>
+      </div>
+    </div>
+    <!-- Challenge -->
+    <div class="timeline-item fade-in">
+      <span class="timeline-date">2024/04 – 2025/02</span>
+      <div class="timeline-card">
+        <h4>Autonomous Greenhouse Challenge 2024 — Champion <span class="tag-badge champion">Champion</span></h4>
+        <ul>
+          <li><span data-lang="en" class="inline">Led crop modeling, climate-control interaction, and decision-making within a "perception–decision–control–economics" pipeline, ensuring smooth cross-module data integration.</span><span data-lang="zh" class="inline">在"感知-决策-控制-经济"管线中负责作物建模、气候控制交互与决策模块，确保跨模块数据流畅集成。</span></li>
+          <li><span data-lang="en" class="inline">Modeled the interactions among climate setpoints, planting density, crop growth, fruit quality, energy cost, and market return to drive AI-based control decisions — achieving remote "zero-human-intervention" closed-loop operation over the 3-month competition.</span><span data-lang="zh" class="inline">建模气候设定值、种植密度、作物生长、果实品质、能耗成本与市场回报之间的交互关系，驱动AI控制决策——在3个月赛期内实现远程"零人工干预"闭环运营。</span></li>
+          <li><span data-lang="en" class="inline">Won the championship with profits 2× the runner-up; the first Chinese team to claim this title, covered by Zhejiang University official WeChat and mainstream domestic/international media (100k+ reads).</span><span data-lang="zh" class="inline">以2倍于亚军的利润赢得冠军；首支获此荣誉的中国代表队，获浙江大学官方微信及国内外主流媒体报道（阅读量10万+）。</span></li>
+        </ul>
+      </div>
+    </div>
+    <!-- GRO -->
+    <div class="timeline-item fade-in">
+      <span class="timeline-date">2022/12 – 2025/08</span>
+      <div class="timeline-card">
+        <h4>StrawberryGRO: Process-Based Growth and Harvest Modeling <span class="tag-badge research">Research</span></h4>
+        <ul>
+          <li><span data-lang="en" class="inline">Developed StrawberryGRO, the first process-based strawberry growth model for plant-factory, covering phenology, photosynthesis, assimilate partitioning, and periodic harvesting modules.</span><span data-lang="zh" class="inline">开发了首个面向植物工厂的基于过程的草莓生长模型StrawberryGRO，涵盖物候期、光合作用、同化物分配和周期性采收模块。</span></li>
+          <li><span data-lang="en" class="inline">Calibrated the model against long-cycle and light–temperature interaction datasets to simulate growth, cultivar response, and periodic harvesting.</span><span data-lang="zh" class="inline">利用长周期和光温交互数据集标定模型，模拟生长、品种响应与周期性采收。</span></li>
+        </ul>
+      </div>
+    </div>
+    <!-- Lettuce -->
+    <div class="timeline-item fade-in">
+      <span class="timeline-date">2021/12 – 2022/12</span>
+      <div class="timeline-card">
+        <h4>Multimodal Deep Learning for Lettuce Fresh-Weight Monitoring <span class="tag-badge research">Research</span></h4>
+        <ul>
+          <li><span data-lang="en" class="inline">Developed a multi-modal fusion deep-learning framework for automatic, non-destructive lettuce fresh-weight monitoring in plant factories.</span><span data-lang="zh" class="inline">开发了多模态融合深度学习框架，用于植物工厂中生菜鲜重的自动无损监测。</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Publications ===== -->
+<section class="section" id="publications" style="background: linear-gradient(180deg, transparent, rgba(26,54,93,0.03), transparent);">
+  <div class="section-header">
+    <h2 data-lang="en">Publications & Achievements</h2>
+    <h2 data-lang="zh">论文与成果</h2>
+    <div class="divider"></div>
+    <p data-lang="en">Peer-reviewed journals, conference presentations, and book chapter.</p>
+    <p data-lang="zh">同行评审期刊、会议报告与专著章节。</p>
+  </div>
+  <div class="pub-grid">
+    <!-- GRO-E -->
+    <div class="pub-card accepted fade-in">
+      <div class="pub-meta">
+        <span class="pub-type" data-lang="en" class="inline">Journal (Accepted)</span>
+        <span class="pub-type" data-lang="zh" class="inline">期刊（已录用）</span>
+        <span class="pub-journal">Computers and Electronics in Agriculture</span>
+        <span class="pub-if">SCI Q1 Top · IF=8.9</span>
+      </div>
+      <h4>Fu, R., Liu, W., Xia, F., & Lin, T.* StrawberryGRO-E: A techno-economic analytic modeling framework for strawberry production in plant factories.</h4>
+      <p class="pub-authors" data-lang="en">First author · Corresponding author: Prof. Tao Lin</p>
+      <p class="pub-authors" data-lang="zh">第一作者 · 通讯作者：林涛教授</p>
+    </div>
+    <!-- GRO -->
+    <div class="pub-card revision fade-in">
+      <div class="pub-meta">
+        <span class="pub-type" data-lang="en" class="inline">Journal (Minor Revision)</span>
+        <span class="pub-type" data-lang="zh" class="inline">期刊（小修）</span>
+        <span class="pub-journal">Computers and Electronics in Agriculture</span>
+        <span class="pub-if">SCI Q1 Top · IF=8.9</span>
+      </div>
+      <h4>Fu, R., Hua, G., Ting, K., & Lin, T.* StrawberryGRO: A dynamic process-based model for simulating strawberry growth and periodic harvesting in plant factories.</h4>
+      <p class="pub-authors" data-lang="en">First author · Corresponding author: Prof. Tao Lin</p>
+      <p class="pub-authors" data-lang="zh">第一作者 · 通讯作者：林涛教授</p>
+    </div>
+    <!-- Frontiers -->
+    <div class="pub-card fade-in">
+      <div class="pub-meta">
+        <span class="pub-type" data-lang="en" class="inline">Journal (Published)</span>
+        <span class="pub-type" data-lang="zh" class="inline">期刊（已发表）</span>
+        <span class="pub-journal">Frontiers in Plant Science</span>
+        <span class="pub-if">SCI Q1 · IF=5.3</span>
+      </div>
+      <h4>Lin, Z., Fu, R., Ren, G., Zhong, R., Ying, Y., & Lin, T. (2022). Automatic monitoring of lettuce fresh weight by multi-modal fusion based deep learning. Frontiers in Plant Science, 13, 980581.</h4>
+      <p class="pub-authors" data-lang="en">Second author</p>
+      <p class="pub-authors" data-lang="zh">第二作者</p>
+    </div>
+    <!-- Book Chapter -->
+    <div class="pub-card fade-in">
+      <div class="pub-meta">
+        <span class="pub-type" data-lang="en" class="inline">Book Chapter</span>
+        <span class="pub-type" data-lang="zh" class="inline">专著章节</span>
+      </div>
+      <h4>Lin, Z., Wang, S., Fu, R., Ting, K. C., & Lin, T. (2022). Data-driven modeling for crop growth in plant factories. In Sensing, data managing, and control technologies for agricultural systems. Springer.</h4>
+    </div>
+    <!-- Conference -->
+    <div class="pub-card fade-in" style="border-left-color: var(--accent-light);">
+      <div class="pub-meta">
+        <span class="pub-type" data-lang="en" class="inline">Conference Presentations</span>
+        <span class="pub-type" data-lang="zh" class="inline">会议报告</span>
+      </div>
+      <h4>1. StrawberryGRO: a dynamic strawberry growth model for plant factory (Oral). GreenSys 2025, Almeria, Spain.</h4>
+      <h4>2. Enhanced Strawberry Yield Prediction (Poster). ASABE 2024, Anaheim, USA.</h4>
+      <h4>3. Optimizing Strawberry Production in Plant Factories (Oral). ASABE 2024, Anaheim, USA.</h4>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Awards ===== -->
+<section class="section" id="awards">
+  <div class="section-header">
+    <h2 data-lang="en">Honors & Awards</h2>
+    <h2 data-lang="zh">荣誉与奖项</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="awards-grid">
+    <div class="award-card fade-in">
+      <div class="award-icon">🏆</div>
+      <h4 data-lang="en">Champion, 4th International Autonomous Greenhouse Challenge</h4>
+      <h4 data-lang="zh">第四届国际自主温室挑战赛 冠军</h4>
+      <p>WUR/Tencent · 2024</p>
+    </div>
+    <div class="award-card fade-in">
+      <div class="award-icon">⭐</div>
+      <h4 data-lang="en">Outstanding Graduate Student Award</h4>
+      <h4 data-lang="zh">优秀研究生奖</h4>
+      <p>Zhejiang University · 2024 & 2025</p>
+    </div>
+    <div class="award-card fade-in">
+      <div class="award-icon">🥈</div>
+      <h4 data-lang="en">Silver Award, "Internet+" Innovation & Entrepreneurship Competition</h4>
+      <h4 data-lang="zh">"互联网+"创新创业大赛 银奖</h4>
+      <p data-lang="en">Zhejiang Provincial International</p>
+      <p data-lang="zh">浙江省国际赛</p>
+    </div>
+    <div class="award-card fade-in">
+      <div class="award-icon">📚</div>
+      <h4 data-lang="en">Kang'erda Scholarship</h4>
+      <h4 data-lang="zh">康尔达奖学金</h4>
+      <p>Zhejiang University</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Skills ===== -->
+<section class="section" id="skills">
+  <div class="section-header">
+    <h2 data-lang="en">Skills</h2>
+    <h2 data-lang="zh">技能</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="skills-container">
+    <div class="skill-card fade-in">
+      <h4>🐍 Programming & Tools</h4>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Python</span>
+        <span class="skill-tag">PyTorch</span>
+        <span class="skill-tag">scikit-learn</span>
+        <span class="skill-tag">OpenCV</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Docker</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <h4>🤖 AI & LLM Agents</h4>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">LangChain / LangGraph</span>
+        <span class="skill-tag">Multi-Agent Systems</span>
+        <span class="skill-tag">LLM / Agent Workflows</span>
+        <span class="skill-tag">Deep Learning</span>
+        <span class="skill-tag">Multi-modal Learning</span>
+        <span class="skill-tag">Gaussian Splatting</span>
+        <span class="skill-tag">Reinforcement Learning</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <h4>🌾 Domain Expertise</h4>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Crop / Process Modeling</span>
+        <span class="skill-tag">Digital Twins</span>
+        <span class="skill-tag">Controlled-Environment Agriculture</span>
+        <span class="skill-tag">Techno-Economic Analysis</span>
+        <span class="skill-tag">3D Reconstruction</span>
+        <span class="skill-tag">Autonomous Greenhouse Control</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <h4>🌍 Languages</h4>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Mandarin (Native)</span>
+        <span class="skill-tag">English (CET-6: 606)</span>
+        <span class="skill-tag">French (Basic)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact ===== -->
+<section class="section" id="contact">
+  <div class="section-header">
+    <h2 data-lang="en">Contact</h2>
+    <h2 data-lang="zh">联系方式</h2>
+    <div class="divider"></div>
+    <p data-lang="en">Feel free to reach out for collaboration, academic inquiries, or industry opportunities.</p>
+    <p data-lang="zh">欢迎联系我，探讨学术合作或业界机会。</p>
+  </div>
+  <div style="max-width:600px;margin:0 auto;">
+    <div class="about-card fade-in" style="text-align:center;padding:40px;">
+      <h3 style="justify-content:center;font-size:22px;">📬 <span data-lang="en" class="inline">Get in Touch</span><span data-lang="zh" class="inline">与我联系</span></h3>
+      <div style="margin-top:20px;">
+        <div class="info-row" style="justify-content:center;">
+          <span class="info-label">Email</span>
+          <span class="info-value"><a href="mailto:Rongmei_fu@zju.edu.cn">Rongmei_fu@zju.edu.cn</a></span>
+        </div>
+        <div class="info-row" style="justify-content:center;">
+          <span class="info-label">Phone</span>
+          <span class="info-value">+86 135 8871 9472</span>
+        </div>
+        <div class="info-row" style="justify-content:center;">
+          <span class="info-label"><span data-lang="en" class="inline">Address</span><span data-lang="zh" class="inline">地址</span></span>
+          <span class="info-value"><span data-lang="en" class="inline">College of Biosystems Engineering and Food Science, Zhejiang University, 866 Yuhangtang Road, Hangzhou, Zhejiang 310058, China</span><span data-lang="zh" class="inline">浙江大学生物系统工程与食品科学学院，杭州市余杭塘路866号，邮编310058</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <p>© 2026 Rongmei Fu · <span data-lang="en" class="inline">Zhejiang University</span><span data-lang="zh" class="inline">浙江大学</span></p>
+  <p style="margin-top:6px;font-size:13px;opacity:0.6;"><span data-lang="en" class="inline">Designed for academic and industry career opportunities</span><span data-lang="zh" class="inline">面向学术与业界职业发展</span></p>
+</footer>
+
+<script>
+// Language toggle
+function toggleLang() {
+  const body = document.body;
+  if (body.classList.contains('lang-en')) {
+    body.classList.remove('lang-en');
+    body.classList.add('lang-zh');
+  } else {
+    body.classList.remove('lang-zh');
+    body.classList.add('lang-en');
+  }
+}
+
+// Fade-in animation on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      const offset = 70;
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
