@@ -1,779 +1,1240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rongmei Fu | Ph.D. Candidate in Agricultural Engineering</title>
+<title>Rongmei Fu | 符容玫 · Ph.D. Candidate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <style>
-:root {
-  --primary: #1a365d;
-  --primary-light: #2e5984;
-  --accent: #2d8659;
-  --accent-light: #3cb371;
-  --bg: #f7f9fc;
-  --card-bg: #ffffff;
-  --text: #1a202c;
-  --text-secondary: #4a5568;
-  --text-muted: #718096;
-  --border: #e2e8f0;
-  --shadow: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
-  --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-  --radius: 16px;
-  --radius-sm: 10px;
-  --gradient: linear-gradient(135deg, #1a365d 0%, #2e5984 50%, #2d8659 100%);
-  --gradient-card: linear-gradient(135deg, #f0f4f8 0%, #e6f4ea 100%);
+/* ====== RESET & BASE ====== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f0f4f8;
+  --bg-alt:#e6f0fa;
+  --card:#fff;
+  --text:#0f172a;
+  --text-2:#475569;
+  --text-3:#94a3b8;
+  --border:#e2e8f0;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 12px rgba(0,0,0,.04);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.08);
+  --p1:#0ea5e9;
+  --p2:#6366f1;
+  --p3:#10b981;
+  --grad:linear-gradient(135deg,#0ea5e9 0%,#6366f1 50%,#10b981 100%);
+  --grad-soft:linear-gradient(135deg,#e0f2fe 0%,#e0e7ff 50%,#d1fae5 100%);
+  --radius:20px;
+  --radius-sm:12px;
+  --transition:.3s cubic-bezier(.4,0,.2,1);
+}
+[data-theme="dark"]{
+  --bg:#0f172a;
+  --bg-alt:#1e293b;
+  --card:#1e293b;
+  --text:#f1f5f9;
+  --text-2:#cbd5e1;
+  --text-3:#64748b;
+  --border:#334155;
+  --shadow:0 1px 3px rgba(0,0,0,.2),0 4px 12px rgba(0,0,0,.15);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.25);
+  --grad-soft:linear-gradient(135deg,#0c4a6e 0%,#312e81 50%,#065f46 100%);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+  transition:background .4s,color .4s;
+}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+
+/* ====== SCROLLBAR ====== */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--p2);border-radius:4px;opacity:.5}
+
+/* ====== SCROLL PROGRESS BAR ====== */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:3px;
+  background:var(--grad);
+  z-index:9999;transition:width .1s;
+  border-radius:0 4px 4px 0;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+/* ====== CURSOR GLOW ====== */
+.cursor-glow{
+  position:fixed;width:400px;height:400px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(99,102,241,.1) 0%,transparent 60%);
+  pointer-events:none;z-index:1;
+  transform:translate(-50%,-50%);
+  transition:opacity .3s;
 }
 
-/* ===== Navbar ===== */
-.navbar {
-  position: fixed; top: 0; left: 0; right: 0;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  z-index: 1000;
-  padding: 0 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 64px;
+/* ====== NAVBAR ====== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:color-mix(in srgb,var(--bg) 85%,transparent);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  height:60px;display:flex;align-items:center;
+  padding:0 24px;justify-content:space-between;
+  transition:background .4s;
 }
-.navbar .logo {
-  font-weight: 700; font-size: 18px; color: var(--primary);
-  display: flex; align-items: center; gap: 10px;
+.nav-brand{
+  display:flex;align-items:center;gap:10px;
+  font-weight:700;font-size:17px;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
 }
-.navbar .logo .dot {
-  width: 12px; height: 12px; border-radius: 50%;
-  background: var(--gradient);
+.nav-brand .logo-dot{
+  width:28px;height:28px;border-radius:8px;
+  background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:13px;font-weight:800;
+  -webkit-text-fill-color:#fff;
 }
-.navbar .nav-links { display: flex; gap: 28px; align-items: center; }
-.navbar .nav-links a {
-  text-decoration: none; color: var(--text-secondary); font-size: 15px; font-weight: 500;
-  transition: color 0.2s;
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-links a{
+  padding:6px 14px;border-radius:20px;
+  font-size:14px;font-weight:500;color:var(--text-2);
+  transition:var(--transition);
 }
-.navbar .nav-links a:hover { color: var(--primary); }
-.lang-toggle {
-  background: var(--gradient);
-  border: none; color: #fff; padding: 6px 16px;
-  border-radius: 20px; font-size: 13px; font-weight: 600;
-  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+.nav-links a:hover{background:var(--bg-alt);color:var(--text)}
+.theme-btn{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid var(--border);background:var(--card);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:18px;transition:var(--transition);
 }
-.lang-toggle:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,54,93,0.3); }
+.theme-btn:hover{transform:rotate(180deg)}
+.lang-btn{
+  padding:5px 14px;border-radius:20px;
+  background:var(--grad);color:#fff;border:none;
+  font-size:13px;font-weight:600;cursor:pointer;
+  transition:var(--transition);
+}
+.lang-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(99,102,241,.3)}
 
-/* ===== Hero ===== */
-.hero {
-  min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
-  padding: 80px 24px 60px;
+/* ====== HERO ====== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  padding:80px 24px 60px;
 }
-.hero::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: var(--gradient);
-  opacity: 0.95;
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
 }
-.hero::after {
-  content: '';
-  position: absolute; top: -50%; right: -10%;
-  width: 500px; height: 500px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(60,179,113,0.25) 0%, transparent 70%);
+.hero-bg canvas{width:100%;height:100%}
+.hero-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:radial-gradient(ellipse at center,transparent 0%,var(--bg) 100%);
 }
-.hero-content {
-  position: relative; z-index: 2; text-align: center; color: #fff;
-  max-width: 900px;
+.hero-content{
+  position:relative;z-index:2;text-align:center;
+  max-width:800px;
 }
-.hero-avatar {
-  width: 120px; height: 120px; border-radius: 50%;
-  background: rgba(255,255,255,0.15);
-  border: 3px solid rgba(255,255,255,0.3);
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 28px;
-  font-size: 48px; font-weight: 700; color: #fff;
-  backdrop-filter: blur(10px);
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 16px;border-radius:20px;
+  background:var(--grad-soft);
+  border:1px solid var(--border);
+  font-size:13px;font-weight:600;color:var(--p2);
+  margin-bottom:24px;
+  animation:fadeInUp .8s ease;
 }
-.hero h1 {
-  font-size: 42px; font-weight: 800; margin-bottom: 12px;
-  letter-spacing: -0.5px;
+.hero-badge .pulse{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--p3);
+  animation:pulse 2s infinite;
 }
-.hero .subtitle {
-  font-size: 20px; opacity: 0.9; margin-bottom: 8px; font-weight: 400;
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+.hero h1{
+  font-size:clamp(36px,6vw,56px);
+  font-weight:900;letter-spacing:-1px;
+  margin-bottom:8px;
+  animation:fadeInUp .8s ease .2s backwards;
 }
-.hero .affiliation {
-  font-size: 16px; opacity: 0.75; margin-bottom: 32px;
+.hero h1 .accent{
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
 }
-.hero-tags {
-  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
-  margin-bottom: 36px;
+.hero .typing{
+  font-size:clamp(18px,3vw,24px);
+  font-weight:600;color:var(--text-2);
+  margin-bottom:20px;min-height:1.5em;
 }
-.hero-tag {
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 6px 16px; border-radius: 20px;
-  font-size: 14px; color: #fff; backdrop-filter: blur(6px);
+.hero .typing .cursor{
+  display:inline-block;width:3px;height:1.1em;
+  background:var(--p1);
+  margin-left:2px;
+  animation:blink .8s infinite;
+  vertical-align:middle;
 }
-.hero-cta {
-  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-desc{
+  font-size:15px;color:var(--text-3);margin-bottom:32px;
+  max-width:600px;margin-left:auto;margin-right:auto;
+  animation:fadeInUp .8s ease .4s backwards;
 }
-.btn {
-  padding: 12px 28px; border-radius: 30px; font-size: 15px; font-weight: 600;
-  text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+.hero-tags{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+  margin-bottom:36px;
+  animation:fadeInUp .8s ease .6s backwards;
 }
-.btn-primary {
-  background: #fff; color: var(--primary);
+.hero-tag{
+  padding:8px 18px;border-radius:25px;
+  font-size:13px;font-weight:500;
+  background:var(--card);border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  transition:var(--transition);
+  cursor:default;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-.btn-outline {
-  background: transparent; color: #fff;
-  border: 2px solid rgba(255,255,255,0.5);
+.hero-tag:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.hero-tag .emoji{margin-right:4px}
+.hero-cta{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  animation:fadeInUp .8s ease .8s backwards;
 }
-.btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+.btn{
+  padding:12px 28px;border-radius:30px;
+  font-size:15px;font-weight:600;
+  cursor:pointer;border:none;
+  transition:var(--transition);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{
+  background:var(--grad);color:#fff;
+  box-shadow:0 4px 16px rgba(99,102,241,.3);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(99,102,241,.4)}
+.btn-ghost{
+  background:var(--card);color:var(--text);
+  border:1px solid var(--border);
+}
+.btn-ghost:hover{background:var(--bg-alt)}
+.scroll-indicator{
+  position:absolute;bottom:24px;left:50%;
+  transform:translateX(-50%);
+  width:26px;height:42px;
+  border:2px solid var(--text-3);border-radius:14px;
+  z-index:2;
+}
+.scroll-indicator::before{
+  content:'';position:absolute;top:8px;left:50%;
+  width:4px;height:8px;margin-left:-2px;
+  border-radius:2px;background:var(--text-3);
+  animation:scrollDown 1.8s infinite;
+}
+@keyframes scrollDown{0%{opacity:1;transform:translateY(0)}80%{opacity:0;transform:translateY(16px)}100%{opacity:0}}
 
-.scroll-hint {
-  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-  color: rgba(255,255,255,0.6); font-size: 13px;
-  animation: bounce 2s infinite;
-}
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-8px); }
-}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-/* ===== Sections ===== */
-.section {
-  padding: 80px 24px;
-  max-width: 1100px;
-  margin: 0 auto;
+/* ====== SECTION COMMON ====== */
+.section{padding:100px 24px;max-width:1080px;margin:0 auto;position:relative}
+.section-title{text-align:center;margin-bottom:56px}
+.section-title .num{
+  display:inline-block;font-size:14px;font-weight:700;
+  color:var(--p1);letter-spacing:2px;
+  margin-bottom:8px;
 }
-.section-header {
-  text-align: center; margin-bottom: 48px;
+.section-title h2{
+  font-size:clamp(28px,4vw,38px);font-weight:800;
+  margin-bottom:12px;
 }
-.section-header h2 {
-  font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 8px;
+.section-title h2 .accent{
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
 }
-.section-header .divider {
-  width: 60px; height: 4px; border-radius: 2px;
-  background: var(--gradient); margin: 0 auto;
+.section-title .line{
+  width:48px;height:4px;border-radius:2px;
+  background:var(--grad);margin:0 auto;
 }
-.section-header p {
-  color: var(--text-muted); font-size: 15px; margin-top: 12px;
-}
-
-/* ===== About ===== */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-.about-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 32px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.about-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-.about-card h3 {
-  font-size: 18px; color: var(--primary); margin-bottom: 16px;
-  display: flex; align-items: center; gap: 8px;
-}
-.about-card h3 .icon { font-size: 22px; }
-.about-card p { color: var(--text-secondary); font-size: 15px; margin-bottom: 8px; }
-.about-card .info-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 0; border-bottom: 1px solid var(--border);
-}
-.about-card .info-row:last-child { border-bottom: none; }
-.about-card .info-label {
-  font-weight: 600; color: var(--text); min-width: 80px; font-size: 14px;
-}
-.about-card .info-value { color: var(--text-secondary); font-size: 14px; }
-.about-card .info-value a { color: var(--primary-light); text-decoration: none; }
-.about-card .info-value a:hover { text-decoration: underline; }
-
-/* ===== Research Experience ===== */
-.timeline {
-  position: relative;
-  padding-left: 40px;
-}
-.timeline::before {
-  content: '';
-  position: absolute; left: 14px; top: 0; bottom: 0;
-  width: 3px;
-  background: linear-gradient(to bottom, var(--primary), var(--accent));
-  border-radius: 2px;
-}
-.timeline-item {
-  position: relative;
-  margin-bottom: 28px;
-}
-.timeline-item::before {
-  content: '';
-  position: absolute; left: -33px; top: 6px;
-  width: 14px; height: 14px; border-radius: 50%;
-  background: #fff; border: 3px solid var(--primary);
-  z-index: 2;
-}
-.timeline-item .timeline-date {
-  display: inline-block;
-  background: var(--gradient-card);
-  padding: 4px 12px; border-radius: 12px;
-  font-size: 13px; color: var(--primary); font-weight: 600;
-  margin-bottom: 8px;
-}
-.timeline-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.timeline-card:hover { transform: translateX(4px); box-shadow: var(--shadow-lg); }
-.timeline-card h4 {
-  font-size: 17px; color: var(--primary); margin-bottom: 10px;
-  display: flex; align-items: center; gap: 8px;
-}
-.timeline-card .tag-badge {
-  display: inline-block;
-  padding: 2px 10px; border-radius: 8px;
-  font-size: 12px; font-weight: 600;
-  margin-left: auto;
-}
-.tag-badge.champion { background: #fff3e0; color: #e65100; }
-.tag-badge.intern { background: #e3f2fd; color: #1565c0; }
-.tag-badge.research { background: #e8f5e9; color: #2e7d32; }
-.timeline-card ul {
-  list-style: none; padding: 0;
-}
-.timeline-card li {
-  position: relative;
-  padding-left: 20px; margin-bottom: 8px;
-  color: var(--text-secondary); font-size: 14px; line-height: 1.6;
-}
-.timeline-card li::before {
-  content: '';
-  position: absolute; left: 0; top: 8px;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--accent);
+.section-title p{
+  color:var(--text-3);font-size:15px;margin-top:14px;
 }
 
-/* ===== Publications ===== */
-.pub-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+/* ====== ABOUT - FLIP CARDS ====== */
+.about-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
 }
-.pub-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--primary);
-  transition: transform 0.2s, box-shadow 0.2s;
+.flip-card{
+  perspective:1200px;height:260px;
 }
-.pub-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-.pub-card.accepted { border-left-color: var(--accent); }
-.pub-card.revision { border-left-color: #f57c00; }
-.pub-card .pub-meta {
-  display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;
+.flip-inner{
+  position:relative;width:100%;height:100%;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+  transform-style:preserve-3d;
+  cursor:pointer;
 }
-.pub-card .pub-type {
-  font-size: 12px; font-weight: 600; padding: 3px 10px;
-  border-radius: 8px; background: var(--gradient-card); color: var(--primary);
+.flip-card:hover .flip-inner{transform:rotateY(180deg)}
+.flip-face{
+  position:absolute;inset:0;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:var(--radius);padding:32px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;box-shadow:var(--shadow);
 }
-.pub-card .pub-journal {
-  font-size: 13px; color: var(--accent); font-weight: 600;
+.flip-front{
+  background:var(--card);border:1px solid var(--border);
 }
-.pub-card .pub-if {
-  font-size: 12px; color: var(--text-muted);
+.flip-front .icon{font-size:40px;margin-bottom:16px}
+.flip-front h3{font-size:18px;color:var(--text);margin-bottom:6px}
+.flip-front p{font-size:13px;color:var(--text-3)}
+.flip-back{
+  background:var(--grad);color:#fff;
+  transform:rotateY(180deg);
 }
-.pub-card h4 {
-  font-size: 15px; color: var(--text); line-height: 1.5; margin-bottom: 8px;
+.flip-back h3{font-size:16px;margin-bottom:12px}
+.flip-back p{font-size:14px;line-height:1.6;opacity:.95}
+.flip-back .info-line{
+  padding:4px 0;font-size:13px;opacity:.9;
 }
-.pub-card .pub-authors {
-  font-size: 13px; color: var(--text-muted); font-style: italic;
+.flip-back a{color:#fff;text-decoration:underline}
+
+/* ====== TIMELINE ====== */
+.timeline{position:relative;padding-left:0}
+.timeline-rail{
+  position:absolute;left:50%;top:0;bottom:0;
+  width:4px;margin-left:-2px;
+  background:var(--border);border-radius:2px;
+  overflow:hidden;
+}
+.timeline-rail .fill{
+  width:100%;height:0;
+  background:var(--grad);
+  transition:height .1s;
+}
+.timeline-item{
+  position:relative;margin-bottom:48px;
+  display:flex;align-items:center;
+}
+.timeline-item:nth-child(odd){justify-content:flex-start}
+.timeline-item:nth-child(even){justify-content:flex-end}
+.timeline-card{
+  width:46%;
+  background:var(--card);
+  border-radius:var(--radius);padding:28px;
+  box-shadow:var(--shadow);border:1px solid var(--border);
+  transition:var(--transition);
+  position:relative;
+}
+.timeline-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-lg);
+}
+.timeline-dot{
+  position:absolute;left:50%;top:50%;
+  width:16px;height:16px;margin-left:-8px;margin-top:-8px;
+  border-radius:50%;background:var(--card);
+  border:3px solid var(--p1);
+  z-index:2;
+  transition:var(--transition);
+}
+.timeline-dot.active{
+  background:var(--grad);
+  border-color:var(--p3);
+  box-shadow:0 0 0 6px rgba(16,185,129,.15);
+}
+.timeline-card .date{
+  display:inline-block;
+  padding:3px 12px;border-radius:10px;
+  font-size:12px;font-weight:600;
+  background:var(--grad-soft);color:var(--p2);
+  margin-bottom:10px;
+}
+.timeline-card h4{
+  font-size:16px;color:var(--text);margin-bottom:10px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.timeline-card .badge{
+  padding:2px 8px;border-radius:6px;
+  font-size:11px;font-weight:700;white-space:nowrap;
+}
+.badge.champ{background:#fef3c7;color:#92400e}
+.badge.intern{background:#dbeafe;color:#1e40af}
+.badge.res{background:#d1fae5;color:#065f46}
+.timeline-card .desc{
+  font-size:14px;color:var(--text-2);line-height:1.6;
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease,margin .4s;
+}
+.timeline-card.expanded .desc{max-height:500px;margin-top:8px}
+.timeline-card .expand-btn{
+  margin-top:10px;
+  font-size:13px;font-weight:600;color:var(--p1);
+  cursor:pointer;display:inline-flex;align-items:center;gap:4px;
+  transition:var(--transition);
+}
+.timeline-card .expand-btn:hover{color:var(--p2)}
+.expand-btn .arrow{transition:transform .3s}
+.timeline-card.expanded .expand-btn .arrow{transform:rotate(180deg)}
+
+/* ====== PUBLICATIONS ====== */
+.pub-list{display:flex;flex-direction:column;gap:16px}
+.pub-item{
+  background:var(--card);
+  border-radius:var(--radius);padding:0;
+  box-shadow:var(--shadow);border:1px solid var(--border);
+  overflow:hidden;
+  transition:var(--transition);
+}
+.pub-item:hover{transform:translateX(6px);box-shadow:var(--shadow-lg)}
+.pub-item .pub-bar{
+  width:5px;align-self:stretch;
+}
+.pub-item.accepted .pub-bar{background:var(--p3)}
+.pub-item.revision .pub-bar{background:#f59e0b}
+.pub-item.published .pub-bar{background:var(--p1)}
+.pub-item.book .pub-bar{background:var(--p2)}
+.pub-item.conf .pub-bar{background:#ec4899}
+.pub-row{
+  display:flex;align-items:stretch;
+}
+.pub-content{flex:1;padding:20px 24px}
+.pub-tags{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.pub-tag{
+  font-size:11px;font-weight:600;
+  padding:3px 10px;border-radius:6px;
+  background:var(--bg-alt);color:var(--text-2);
+}
+.pub-tag.if{background:var(--grad-soft);color:var(--p2)}
+.pub-item h4{font-size:15px;line-height:1.5;margin-bottom:6px}
+.pub-item .authors{font-size:13px;color:var(--text-3);font-style:italic}
+
+/* ====== AWARDS ====== */
+.awards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+.award-card{
+  background:var(--card);
+  border-radius:var(--radius);padding:32px 24px;
+  text-align:center;box-shadow:var(--shadow);border:1px solid var(--border);
+  transition:var(--transition);
+  position:relative;overflow:hidden;
+}
+.award-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:var(--grad);
+}
+.award-card::after{
+  content:'';position:absolute;bottom:-50%;left:-50%;
+  width:200%;height:200%;
+  background:radial-gradient(circle,rgba(99,102,241,.06) 0%,transparent 50%);
+  transition:opacity .3s;opacity:0;
+}
+.award-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.award-card:hover::after{opacity:1}
+.award-icon{
+  width:56px;height:56px;margin:0 auto 16px;
+  border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;
+  background:var(--grad-soft);
+}
+.award-card h4{font-size:15px;margin-bottom:6px;line-height:1.4}
+.award-card p{font-size:13px;color:var(--text-3)}
+
+/* ====== SKILLS ====== */
+.skills-tabs{
+  display:flex;gap:8px;justify-content:center;margin-bottom:32px;flex-wrap:wrap;
+}
+.skill-tab{
+  padding:8px 20px;border-radius:25px;
+  font-size:14px;font-weight:600;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text-2);cursor:pointer;
+  transition:var(--transition);
+}
+.skill-tab.active{
+  background:var(--grad);color:#fff;border-color:transparent;
+  box-shadow:0 4px 12px rgba(99,102,241,.3);
+}
+.skill-tab:hover:not(.active){border-color:var(--p1)}
+.skill-panel{display:none}
+.skill-panel.active{display:block;animation:fadeIn .4s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.skill-bars{display:flex;flex-direction:column;gap:16px;max-width:600px;margin:0 auto}
+.skill-bar{display:flex;align-items:center;gap:16px}
+.skill-bar .name{
+  width:180px;font-size:14px;font-weight:500;flex-shrink:0;
+}
+.skill-bar .track{
+  flex:1;height:10px;background:var(--bg-alt);border-radius:5px;overflow:hidden;
+}
+.skill-bar .fill{
+  height:100%;border-radius:5px;
+  background:var(--grad);
+  width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1);
+}
+.skill-bar .pct{
+  width:40px;font-size:13px;font-weight:600;color:var(--text-3);
+  text-align:right;
 }
 
-/* ===== Awards ===== */
-.awards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+/* ====== CONTACT ====== */
+.contact-wrap{
+  max-width:560px;margin:0 auto;
+  text-align:center;
 }
-.award-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 28px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
-  position: relative;
-  overflow: hidden;
+.contact-card{
+  background:var(--card);border-radius:var(--radius);
+  padding:48px 32px;box-shadow:var(--shadow);border:1px solid var(--border);
+  position:relative;overflow:hidden;
 }
-.award-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 4px;
-  background: var(--gradient);
+.contact-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:var(--grad);
 }
-.award-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-.award-card .award-icon {
-  width: 56px; height: 56px; margin: 0 auto 16px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px;
-  background: var(--gradient-card);
+.contact-card .icon-big{font-size:48px;margin-bottom:16px}
+.contact-card h3{font-size:22px;margin-bottom:8px}
+.contact-card .sub{font-size:14px;color:var(--text-3);margin-bottom:28px}
+.contact-items{display:flex;flex-direction:column;gap:14px}
+.contact-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 20px;border-radius:var(--radius-sm);
+  background:var(--bg-alt);
+  transition:var(--transition);
 }
-.award-card h4 {
-  font-size: 16px; color: var(--primary); margin-bottom: 6px; line-height: 1.4;
-}
-.award-card p { font-size: 13px; color: var(--text-muted); }
+.contact-item:hover{transform:translateX(4px)}
+.contact-item .ci-icon{font-size:20px}
+.contact-item .ci-label{font-size:12px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.contact-item .ci-value{font-size:15px;font-weight:500}
+.contact-item .ci-value a{color:var(--p1)}
 
-/* ===== Skills ===== */
-.skills-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+/* ====== FOOTER ====== */
+.footer{
+  text-align:center;padding:40px 24px;
+  font-size:13px;color:var(--text-3);
+  border-top:1px solid var(--border);
 }
-.skill-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-}
-.skill-card h4 {
-  font-size: 16px; color: var(--primary); margin-bottom: 14px;
-  display: flex; align-items: center; gap: 8px;
-}
-.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.skill-tag {
-  padding: 5px 12px; border-radius: 8px;
-  font-size: 13px; font-weight: 500;
-  background: var(--gradient-card); color: var(--primary);
-  border: 1px solid rgba(26,54,93,0.08);
-}
-.skill-tag.highlight {
-  background: var(--primary); color: #fff;
-}
+.footer .heart{color:#ef4444}
 
-/* ===== Footer ===== */
-.footer {
-  background: var(--primary);
-  color: rgba(255,255,255,0.8);
-  text-align: center;
-  padding: 40px 24px;
-  font-size: 14px;
-}
-.footer a { color: #fff; text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
+/* ====== LANG TOGGLE ====== */
+[data-lang="zh"]{display:none}
+body.lang-zh [data-lang="zh"]{display:inline}
+body.lang-zh [data-lang="en"]{display:none}
+body.lang-zh [data-lang="zh"].block{display:block}
+body.lang-en [data-lang="en"].block{display:block}
 
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .navbar { padding: 0 16px; }
-  .navbar .nav-links { display: none; }
-  .hero h1 { font-size: 30px; }
-  .hero .subtitle { font-size: 16px; }
-  .about-grid { grid-template-columns: 1fr; }
-  .section { padding: 60px 16px; }
-  .section-header h2 { font-size: 26px; }
-  .timeline { padding-left: 32px; }
-  .timeline-item::before { left: -28px; }
+/* ====== RESPONSIVE ====== */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav{padding:0 16px}
+  .hero{padding:100px 16px 60px}
+  .hero h1{font-size:32px}
+  .section{padding:80px 16px}
+  .section-title h2{font-size:26px}
+  .timeline-item:nth-child(odd),.timeline-item:nth-child(even){justify-content:center}
+  .timeline-card{width:100%}
+  .timeline-rail{left:20px}
+  .timeline-dot{left:20px}
+  .flip-card{height:240px}
+  .skill-bar .name{width:120px;font-size:13px}
+  .pub-row{flex-direction:column}
+  .pub-item .pub-bar{width:100%;height:4px}
+  .cursor-glow{display:none}
 }
 
-/* ===== Animations ===== */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+/* ====== REVEAL ANIMATION ====== */
+.reveal{
+  opacity:0;transform:translateY(30px);
+  transition:opacity .6s ease,transform .6s ease;
 }
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal.delay-1{transition-delay:.1s}
+.reveal.delay-2{transition-delay:.2s}
+.reveal.delay-3{transition-delay:.3s}
+
+/* ====== FLOATING ELEMENTS ====== */
+.float{
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* ====== GRADIENT TEXT ====== */
+.grad-text{
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
 }
 
-/* ===== Hidden by default (language toggle) ===== */
-[data-lang="zh"] { display: none; }
-body.lang-zh [data-lang="zh"] { display: block; }
-body.lang-zh [data-lang="en"] { display: none; }
-body.lang-zh [data-lang="zh"].inline { display: inline; }
-body.lang-en [data-lang="en"].inline { display: inline; }
+/* ====== TAB MODE (Academic / Industry) ====== */
+.mode-switch{
+  display:flex;gap:0;margin:0 auto 40px;
+  background:var(--bg-alt);border-radius:30px;
+  padding:4px;width:fit-content;
+}
+.mode-btn{
+  padding:8px 24px;border-radius:26px;
+  font-size:14px;font-weight:600;
+  border:none;background:transparent;color:var(--text-2);
+  cursor:pointer;transition:var(--transition);
+}
+.mode-btn.active{
+  background:var(--grad);color:#fff;
+  box-shadow:0 2px 8px rgba(99,102,241,.3);
+}
+.mode-content{display:none}
+.mode-content.active{display:block;animation:fadeIn .5s}
+
+/* Industry-specific section */
+.industry-highlights{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;
+}
+.highlight-card{
+  background:var(--card);border-radius:var(--radius);padding:24px;
+  box-shadow:var(--shadow);border:1px solid var(--border);
+  transition:var(--transition);
+}
+.highlight-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.highlight-card .hc-icon{font-size:32px;margin-bottom:12px}
+.highlight-card h4{font-size:15px;margin-bottom:8px}
+.highlight-card p{font-size:13px;color:var(--text-2);line-height:1.5}
 </style>
 </head>
 <body class="lang-en">
 
-<!-- ===== Navbar ===== -->
-<nav class="navbar">
-  <div class="logo"><span class="dot"></span> Rongmei Fu</div>
-  <div class="nav-links">
-    <a href="#about"><span data-lang="en" class="inline">About</span><span data-lang="zh" class="inline">关于</span></a>
-    <a href="#research"><span data-lang="en" class="inline">Research</span><span data-lang="zh" class="inline">研究</span></a>
-    <a href="#publications"><span data-lang="en" class="inline">Publications</span><span data-lang="zh" class="inline">论文</span></a>
-    <a href="#awards"><span data-lang="en" class="inline">Awards</span><span data-lang="zh" class="inline">荣誉</span></a>
-    <a href="#skills"><span data-lang="en" class="inline">Skills</span><span data-lang="zh" class="inline">技能</span></a>
-    <a href="#contact"><span data-lang="en" class="inline">Contact</span><span data-lang="zh" class="inline">联系</span></a>
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Cursor Glow -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Navbar -->
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="logo-dot">RF</span>
+    Rongmei Fu
   </div>
-  <button class="lang-toggle" onclick="toggleLang()">
-    <span data-lang="en" class="inline">中文</span>
-    <span data-lang="zh" class="inline">EN</span>
-  </button>
+  <div class="nav-links">
+    <a href="#about"><span data-lang="en">About</span><span data-lang="zh">关于</span></a>
+    <a href="#journey"><span data-lang="en">Journey</span><span data-lang="zh">经历</span></a>
+    <a href="#publications"><span data-lang="en">Papers</span><span data-lang="zh">论文</span></a>
+    <a href="#awards"><span data-lang="en">Awards</span><span data-lang="zh">荣誉</span></a>
+    <a href="#skills"><span data-lang="en">Skills</span><span data-lang="zh">技能</span></a>
+    <a href="#contact"><span data-lang="en">Contact</span><span data-lang="zh">联系</span></a>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    <button class="lang-btn" onclick="toggleLang()">
+      <span data-lang="en">中文</span><span data-lang="zh">EN</span>
+    </button>
+  </div>
 </nav>
 
-<!-- ===== Hero ===== -->
+<!-- Hero -->
 <section class="hero">
+  <div class="hero-bg">
+    <canvas id="particleCanvas"></canvas>
+  </div>
+  <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-avatar">RF</div>
-    <h1>Rongmei Fu <span style="font-size:28px;opacity:0.7;">/ 符容玫</span></h1>
-    <p class="subtitle" data-lang="en">Ph.D. Candidate in Agricultural Engineering</p>
-    <p class="subtitle" data-lang="zh">农业工程博士研究生</p>
-    <p class="affiliation">
-      <span data-lang="en">Zhejiang University · College of Biosystems Engineering and Food Science</span>
-      <span data-lang="zh">浙江大学 · 生物系统工程与食品科学学院</span>
+    <div class="hero-badge">
+      <span class="pulse"></span>
+      <span data-lang="en">Open to visiting / collaboration opportunities</span>
+      <span data-lang="zh">正在寻找联培 / 合作机会</span>
+    </div>
+    <h1>Hi, I'm <span class="accent">Rongmei Fu</span> 👋</h1>
+    <div class="typing" id="typing"></div>
+    <p class="hero-desc">
+      <span data-lang="en">Ph.D. Candidate at Zhejiang University, bridging mechanistic crop modeling, AI agents, and techno-economic analysis for next-generation controlled-environment agriculture.</span>
+      <span data-lang="zh">浙江大学生物系统工程博士在读，在机理作物建模、AI智能体与工程经济分析的交叉领域，探索下一代受控环境农业。</span>
     </p>
     <div class="hero-tags">
-      <span class="hero-tag" data-lang="en">Controlled-Environment Agriculture</span>
-      <span class="hero-tag" data-lang="zh">受控环境农业</span>
-      <span class="hero-tag" data-lang="en">Crop Growth Modeling</span>
-      <span class="hero-tag" data-lang="zh">作物生长建模</span>
-      <span class="hero-tag" data-lang="en">Digital Twins</span>
-      <span class="hero-tag" data-lang="zh">数字孪生</span>
-      <span class="hero-tag" data-lang="en">Autonomous Greenhouse Control</span>
-      <span class="hero-tag" data-lang="zh">自主温室控制</span>
-      <span class="hero-tag" data-lang="en">LLM/Agent-based Decision Support</span>
-      <span class="hero-tag" data-lang="zh">大模型/智能体决策支持</span>
+      <span class="hero-tag"><span class="emoji">🌱</span><span data-lang="en">Plant Factory</span><span data-lang="zh">植物工厂</span></span>
+      <span class="hero-tag"><span class="emoji">🤖</span><span data-lang="en">AI Agents</span><span data-lang="zh">AI智能体</span></span>
+      <span class="hero-tag"><span class="emoji">📊</span><span data-lang="en">Digital Twins</span><span data-lang="zh">数字孪生</span></span>
+      <span class="hero-tag"><span class="emoji">🏆</span><span data-lang="en">Champion</span><span data-lang="zh">冠军</span></span>
     </div>
     <div class="hero-cta">
       <a href="#contact" class="btn btn-primary">
-        <span data-lang="en" class="inline">Get in Touch</span>
-        <span data-lang="zh" class="inline">联系我</span>
+        ✉️ <span data-lang="en">Let's Talk</span><span data-lang="zh">联系我</span>
       </a>
-      <a href="#research" class="btn btn-outline">
-        <span data-lang="en" class="inline">View Research</span>
-        <span data-lang="zh" class="inline">查看研究</span>
+      <a href="#journey" class="btn btn-ghost">
+        <span data-lang="en">Explore My Work</span><span data-lang="zh">查看我的工作</span>
       </a>
     </div>
   </div>
-  <div class="scroll-hint">↓</div>
+  <div class="scroll-indicator"></div>
 </section>
 
-<!-- ===== About ===== -->
+<!-- About - Flip Cards -->
 <section class="section" id="about">
-  <div class="section-header">
-    <h2 data-lang="en">About Me</h2>
-    <h2 data-lang="zh">关于我</h2>
-    <div class="divider"></div>
-    <p data-lang="en">Bridging mechanistic modeling, AI, and engineering economics for next-generation agriculture.</p>
-    <p data-lang="zh">在机理建模、人工智能与工程经济分析的交叉点，为新一代农业搭建桥梁。</p>
+  <div class="section-title reveal">
+    <span class="num">01</span>
+    <h2><span data-lang="en">About</span><span data-lang="zh">关于我</span> <span class="accent" data-lang="en">Me</span><span class="accent" data-lang="zh"></span></h2>
+    <div class="line"></div>
+    <p data-lang="en">Hover to flip · 悬停翻转</p>
+    <p data-lang="zh">悬停翻转卡片</p>
   </div>
   <div class="about-grid">
-    <div class="about-card fade-in">
-      <h3><span class="icon">🎓</span> <span data-lang="en" class="inline">Education</span><span data-lang="zh" class="inline">教育背景</span></h3>
-      <div class="info-row">
-        <span class="info-label">Ph.D.</span>
-        <span class="info-value"><span data-lang="en" class="inline">Agricultural Engineering, Zhejiang University</span><span data-lang="zh" class="inline">农业工程，浙江大学</span> (2022–<span data-lang="en" class="inline">Present</span><span data-lang="zh" class="inline">至今</span>)</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">B.S.</span>
-        <span class="info-value"><span data-lang="en" class="inline">Agricultural Engineering, Zhejiang University</span><span data-lang="zh" class="inline">农业工程，浙江大学</span> (2018–2022)</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label"><span data-lang="en" class="inline">Advisor</span><span data-lang="zh" class="inline">导师</span></span>
-        <span class="info-value">Prof. Tao Lin</span>
+    <!-- Card 1: Education -->
+    <div class="flip-card reveal">
+      <div class="flip-inner">
+        <div class="flip-face flip-front">
+          <div class="icon">🎓</div>
+          <h3>Education</h3>
+          <p>Zhejiang University</p>
+        </div>
+        <div class="flip-face flip-back">
+          <h3>Education</h3>
+          <div class="info-line">Ph.D. in Agricultural Engineering (2022–Present)</div>
+          <div class="info-line">B.S. in Agricultural Engineering (2018–2022)</div>
+          <div class="info-line">Advisor: Prof. Tao Lin</div>
+        </div>
       </div>
     </div>
-    <div class="about-card fade-in">
-      <h3><span class="icon">🔬</span> <span data-lang="en" class="inline">Research Focus</span><span data-lang="zh" class="inline">研究方向</span></h3>
-      <p data-lang="en">I develop process-based crop models, digital twins, and AI-driven decision-support systems for controlled-environment agriculture (CEA). My work integrates mechanistic modeling with machine learning and techno-economic analysis to enable autonomous, optimal, and sustainable plant factory operations.</p>
-      <p data-lang="zh">我致力于为受控环境农业（CEA）开发基于过程的作物模型、数字孪生和AI驱动的决策支持系统。我的工作将机理建模与机器学习、工程经济分析相结合，实现植物工厂的自主化、最优化和可持续运营。</p>
+    <!-- Card 2: Research -->
+    <div class="flip-card reveal delay-1">
+      <div class="flip-inner">
+        <div class="flip-face flip-front">
+          <div class="icon">🔬</div>
+          <h3>Research</h3>
+          <p>Crop Modeling × AI × CEA</p>
+        </div>
+        <div class="flip-face flip-back">
+          <h3>Research Focus</h3>
+          <p>Process-based crop models, digital twins, and AI-driven decision-support for controlled-environment agriculture — integrating mechanistic modeling with ML and techno-economic analysis.</p>
+        </div>
+      </div>
+    </div>
+    <!-- Card 3: Achievement -->
+    <div class="flip-card reveal delay-2">
+      <div class="flip-inner">
+        <div class="flip-face flip-front">
+          <div class="icon">🏆</div>
+          <h3>Highlights</h3>
+          <p>Champion · Q1 Top Papers</p>
+        </div>
+        <div class="flip-face flip-back">
+          <h3>Key Achievements</h3>
+          <div class="info-line">🥇 Autonomous Greenhouse Challenge Champion</div>
+          <div class="info-line">📄 2× SCI Q1 Top (IF=8.9) — First Author</div>
+          <div class="info-line">🤖 Huawei Multi-Agent / LLM Engineer</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Research Experience ===== -->
-<section class="section" id="research">
-  <div class="section-header">
-    <h2 data-lang="en">Research Experience</h2>
-    <h2 data-lang="zh">研究经历</h2>
-    <div class="divider"></div>
-    <p data-lang="en">From mechanistic models to digital twins to autonomous AI systems.</p>
-    <p data-lang="zh">从机理模型到数字孪生，再到自主AI系统。</p>
+<!-- Mode Switch: Academic / Industry -->
+<div style="text-align:center;">
+  <div class="mode-switch">
+    <button class="mode-btn active" onclick="switchMode('academic')" data-mode="academic">
+      <span data-lang="en">🎓 Academic Profile</span><span data-lang="zh">🎓 学术方向</span>
+    </button>
+    <button class="mode-btn" onclick="switchMode('industry')" data-mode="industry">
+      <span data-lang="en">💼 Industry Profile</span><span data-lang="zh">💼 业界方向</span>
+    </button>
+  </div>
+</div>
+
+<!-- Research Journey - Interactive Timeline -->
+<section class="section mode-content active" id="journey" data-mode-content="academic">
+  <div class="section-title reveal">
+    <span class="num">02</span>
+    <h2>Research <span class="accent">Journey</span></h2>
+    <div class="line"></div>
+    <p data-lang="en">Click cards to expand · 点击展开详情</p>
+    <p data-lang="zh">点击卡片展开详情</p>
   </div>
   <div class="timeline">
-    <!-- Huawei -->
-    <div class="timeline-item fade-in">
-      <span class="timeline-date">2026/08 – 2026/10</span>
-      <div class="timeline-card">
-        <h4>Huawei · Multi-Agent / LLM Engineer Intern <span class="tag-badge intern">Intern</span></h4>
-        <ul>
-          <li><span data-lang="en" class="inline">Built a LangGraph-based multi-agent system using an orchestrator-worker pattern for case-based extraction of atomic, reusable capabilities to build standard SOP.</span><span data-lang="zh" class="inline">基于LangGraph构建了orchestrator-worker模式的多智能体系统，通过案例推理提取原子化可复用能力，构建标准作业流程（SOP）。</span></li>
-        </ul>
+    <div class="timeline-rail"><div class="fill" id="timelineFill"></div></div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-card" onclick="toggleExpand(this)">
+        <span class="date">2026.08 – 2026.10</span>
+        <h4>Huawei · LLM Engineer Intern <span class="badge intern">Intern</span></h4>
+        <div class="expand-btn"><span data-lang="en">Details</span><span data-lang="zh">详情</span> <span class="arrow">▾</span></div>
+        <div class="desc">
+          <span data-lang="en">Built a LangGraph-based multi-agent system using orchestrator-worker pattern for case-based extraction of atomic, reusable capabilities to build standard SOP.</span>
+          <span data-lang="zh">基于LangGraph构建orchestrator-worker多智能体系统，通过案例推理提取原子化可复用能力，构建标准作业流程。</span>
+        </div>
+      </div>
+      <div class="timeline-dot"></div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-card" onclick="toggleExpand(this)">
+        <span class="date">2026.02 – Present</span>
+        <h4>StrawberryFSPM <span class="badge res">Research</span></h4>
+        <div class="expand-btn"><span data-lang="en">Details</span><span data-lang="zh">详情</span> <span class="arrow">▾</span></div>
+        <div class="desc">
+          <span data-lang="en">• End-to-end 3D reconstruction of canopy structure from mobile video using 2D Gaussian Splatting<br>• Coupled canopy geometry, ray tracing, and StrawberryGRO into a plant-specific digital twin</span>
+          <span data-lang="zh">• 利用2D高斯泼溅从移动视频流中端到端重建冠层结构<br>• 将冠层几何、光线追踪与StrawberryGRO耦合为植物级数字孪生</span>
+        </div>
+      </div>
+      <div class="timeline-dot"></div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-card" onclick="toggleExpand(this)">
+        <span class="date">2025.03 – 2026.04</span>
+        <h4>StrawberryGRO-E <span class="badge res">Research</span></h4>
+        <div class="expand-btn"><span data-lang="en">Details</span><span data-lang="zh">详情</span> <span class="arrow">▾</span></div>
+        <div class="desc">
+          <span data-lang="en">• Proposed SAI (Simultaneous Active Inflorescences) index explaining yield heterogeneity across 50 plants, 475 inflorescences, 1,130 fruits<br>• Developed 365-day techno-economic framework translating management → yield → revenue → cost → profit</span>
+          <span data-lang="zh">• 提出SAI指数解释50株/475花序/1130果实的产量异质性<br>• 开发365天技术经济框架：管理策略→产量→收入→成本→利润</span>
+        </div>
+      </div>
+      <div class="timeline-dot"></div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-card" onclick="toggleExpand(this)">
+        <span class="date">2024.04 – 2025.02</span>
+        <h4>Autonomous Greenhouse Champion <span class="badge champ">🥇</span></h4>
+        <div class="expand-btn"><span data-lang="en">Details</span><span data-lang="zh">详情</span> <span class="arrow">▾</span></div>
+        <div class="desc">
+          <span data-lang="en">• Led crop modeling & AI decision-making in perception–decision–control–economics pipeline<br>• Modeled climate↔growth↔quality↔cost↔market interactions for zero-human-intervention closed-loop control<br>• Won with 2× runner-up profits; first Chinese team champion; 100k+ media reads</span>
+          <span data-lang="zh">• 在感知-决策-控制-经济管线中负责作物建模与AI决策<br>• 建模气候↔生长↔品质↔成本↔市场交互关系，实现零人工干预闭环运营<br>• 以2倍于亚军的利润夺冠，首支中国代表队，媒体报道10万+阅读</span>
+        </div>
+      </div>
+      <div class="timeline-dot"></div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-card" onclick="toggleExpand(this)">
+        <span class="date">2022.12 – 2025.08</span>
+        <h4>StrawberryGRO <span class="badge res">Research</span></h4>
+        <div class="expand-btn"><span data-lang="en">Details</span><span data-lang="zh">详情</span> <span class="arrow">▾</span></div>
+        <div class="desc">
+          <span data-lang="en">• First process-based strawberry growth model for plant factories — phenology, photosynthesis, assimilate partitioning, periodic harvesting<br>• Calibrated against long-cycle & light–temperature interaction datasets</span>
+          <span data-lang="zh">• 首个面向植物工厂的基于过程的草莓生长模型——物候期、光合作用、同化物分配、周期性采收<br>• 利用长周期和光温交互数据集标定</span>
+        </div>
+      </div>
+      <div class="timeline-dot"></div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-card" onclick="toggleExpand(this)">
+        <span class="date">2021.12 – 2022.12</span>
+        <h4>Multimodal DL for Lettuce <span class="badge res">Research</span></h4>
+        <div class="expand-btn"><span data-lang="en">Details</span><span data-lang="zh">详情</span> <span class="arrow">▾</span></div>
+        <div class="desc">
+          <span data-lang="en">Multi-modal fusion deep-learning framework for automatic, non-destructive lettuce fresh-weight monitoring in plant factories. Published in Frontiers in Plant Science (SCI Q1, IF=5.3).</span>
+          <span data-lang="zh">多模态融合深度学习框架，用于植物工厂中生菜鲜重的自动无损监测。发表于Frontiers in Plant Science（SCI Q1，IF=5.3）。</span>
+        </div>
+      </div>
+      <div class="timeline-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Industry Profile -->
+<section class="section mode-content" id="journey-industry" data-mode-content="industry">
+  <div class="section-title reveal">
+    <span class="num">02</span>
+    <h2>Industry <span class="accent">Highlights</span></h2>
+    <div class="line"></div>
+    <p data-lang="en">What I bring to the table</p>
+    <p data-lang="zh">我能带来的价值</p>
+  </div>
+  <div class="industry-highlights">
+    <div class="highlight-card reveal">
+      <div class="hc-icon">🤖</div>
+      <h4>LLM Agent Engineering</h4>
+      <p>Built production-grade multi-agent systems at Huawei using LangGraph orchestrator-worker patterns. Experienced in SOP automation, case-based reasoning, and agent orchestration.</p>
+    </div>
+    <div class="highlight-card reveal delay-1">
+      <div class="hc-icon">🎯</div>
+      <h4>End-to-End Delivery</h4>
+      <p>From research problem → data collection → model development → system integration → competition-winning deployment. Led a team to champion with zero-human-intervention autonomous control.</p>
+    </div>
+    <div class="highlight-card reveal delay-2">
+      <div class="hc-icon">💰</div>
+      <h4>Techno-Economic Thinking</h4>
+      <p>Beyond models — I translate technical decisions into profit margins. Built frameworks mapping management strategies to yield, revenue, cost, and profit across 365-day cycles.</p>
+    </div>
+    <div class="highlight-card reveal">
+      <div class="hc-icon">🔗</div>
+      <h4>Cross-Domain Bridge</h4>
+      <p>Fluent in both agricultural domain knowledge and AI/ML methodology. I speak the language of plant scientists and ML engineers — and connect them.</p>
+    </div>
+    <div class="highlight-card reveal delay-1">
+      <div class="hc-icon">📈</div>
+      <h4>3D + Vision Pipeline</h4>
+      <p>Hands-on with 2D Gaussian Splatting, multi-modal deep learning, OpenCV, PyTorch. Built end-to-end 3D reconstruction pipelines from mobile video to digital twin.</p>
+    </div>
+    <div class="highlight-card reveal delay-2">
+      <div class="hc-icon">🚀</div>
+      <h4>Proven Leadership</h4>
+      <p>Led the first Chinese team to win the International Autonomous Greenhouse Challenge. Managed cross-module integration across perception, decision, control, and economics.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Publications -->
+<section class="section" id="publications" style="background:linear-gradient(180deg,transparent,rgba(99,102,241,.03),transparent)">
+  <div class="section-title reveal">
+    <span class="num">03</span>
+    <h2><span data-lang="en">Publications &</span><span data-lang="zh"></span> <span class="accent">Achievements</span></h2>
+    <div class="line"></div>
+  </div>
+  <div class="pub-list">
+    <div class="pub-item accepted reveal">
+      <div class="pub-row">
+        <div class="pub-bar"></div>
+        <div class="pub-content">
+          <div class="pub-tags">
+            <span class="pub-tag" data-lang="en">Journal · Accepted</span><span class="pub-tag" data-lang="zh">期刊 · 已录用</span>
+            <span class="pub-tag if">SCI Q1 Top · IF=8.9</span>
+          </div>
+          <h4>StrawberryGRO-E: A techno-economic analytic modeling framework for strawberry production in plant factories</h4>
+          <p class="authors">Fu, R., Liu, W., Xia, F., & Lin, T.* — <em>Computers and Electronics in Agriculture</em></p>
+        </div>
       </div>
     </div>
-    <!-- FSPM -->
-    <div class="timeline-item fade-in">
-      <span class="timeline-date">2026/02 – Present</span>
-      <div class="timeline-card">
-        <h4>StrawberryFSPM: Functional-Structural Digital Twin <span class="tag-badge research">Research</span></h4>
-        <ul>
-          <li><span data-lang="en" class="inline">Developed an end-to-end 3D reconstruction workflow that recovers canopy structure and temporal traits from mobile video streams using 2D Gaussian Splatting.</span><span data-lang="zh" class="inline">开发了端到端3D重建工作流，利用2D高斯泼溅（2D Gaussian Splatting）从移动视频流中恢复冠层结构和时间序列特征。</span></li>
-          <li><span data-lang="en" class="inline">Coupled canopy geometry, ray tracing, and StrawberryGRO into a plant-specific digital twin for simulating light interception and growth response.</span><span data-lang="zh" class="inline">将冠层几何、光线追踪与StrawberryGRO模型耦合，构建植物级数字孪生，用于模拟光截获与生长响应。</span></li>
-        </ul>
+    <div class="pub-item revision reveal">
+      <div class="pub-row">
+        <div class="pub-bar"></div>
+        <div class="pub-content">
+          <div class="pub-tags">
+            <span class="pub-tag" data-lang="en">Journal · Minor Revision</span><span class="pub-tag" data-lang="zh">期刊 · 小修中</span>
+            <span class="pub-tag if">SCI Q1 Top · IF=8.9</span>
+          </div>
+          <h4>StrawberryGRO: A dynamic process-based model for simulating strawberry growth and periodic harvesting in plant factories</h4>
+          <p class="authors">Fu, R., Hua, G., Ting, K., & Lin, T.* — <em>Computers and Electronics in Agriculture</em></p>
+        </div>
       </div>
     </div>
-    <!-- GRO-E -->
-    <div class="timeline-item fade-in">
-      <span class="timeline-date">2025/03 – 2026/04</span>
-      <div class="timeline-card">
-        <h4>StrawberryGRO-E: Techno-Economic Management Framework <span class="tag-badge research">Research</span></h4>
-        <ul>
-          <li><span data-lang="en" class="inline">Proposed Simultaneous Active Inflorescences (SAI) as a reproductive-load index to explain yield heterogeneity across 50 plants, 475 inflorescences, and 1,130 fruits.</span><span data-lang="zh" class="inline">提出"同时活性花序数"（SAI）作为生殖负载指数，解释了50株植物、475个花序、1,130个果实的产量异质性。</span></li>
-          <li><span data-lang="en" class="inline">Developed a 365-day techno-economic decision-support framework that translates management strategies into yield, revenue, operating cost, and profit margin, enabling scenario-level comparison and quantitative evaluation of management alternatives.</span><span data-lang="zh" class="inline">开发了365天技术经济决策支持框架，将管理策略转化为产量、收入、运营成本和利润率，实现场景级方案比较与定量评估。</span></li>
-        </ul>
+    <div class="pub-item published reveal">
+      <div class="pub-row">
+        <div class="pub-bar"></div>
+        <div class="pub-content">
+          <div class="pub-tags">
+            <span class="pub-tag" data-lang="en">Journal · Published</span><span class="pub-tag" data-lang="zh">期刊 · 已发表</span>
+            <span class="pub-tag if">SCI Q1 · IF=5.3</span>
+          </div>
+          <h4>Automatic monitoring of lettuce fresh weight by multi-modal fusion based deep learning</h4>
+          <p class="authors">Lin, Z., Fu, R., Ren, G., Zhong, R., Ying, Y., & Lin, T. — <em>Frontiers in Plant Science</em>, 13, 980581</p>
+        </div>
       </div>
     </div>
-    <!-- Challenge -->
-    <div class="timeline-item fade-in">
-      <span class="timeline-date">2024/04 – 2025/02</span>
-      <div class="timeline-card">
-        <h4>Autonomous Greenhouse Challenge 2024 — Champion <span class="tag-badge champion">Champion</span></h4>
-        <ul>
-          <li><span data-lang="en" class="inline">Led crop modeling, climate-control interaction, and decision-making within a "perception–decision–control–economics" pipeline, ensuring smooth cross-module data integration.</span><span data-lang="zh" class="inline">在"感知-决策-控制-经济"管线中负责作物建模、气候控制交互与决策模块，确保跨模块数据流畅集成。</span></li>
-          <li><span data-lang="en" class="inline">Modeled the interactions among climate setpoints, planting density, crop growth, fruit quality, energy cost, and market return to drive AI-based control decisions — achieving remote "zero-human-intervention" closed-loop operation over the 3-month competition.</span><span data-lang="zh" class="inline">建模气候设定值、种植密度、作物生长、果实品质、能耗成本与市场回报之间的交互关系，驱动AI控制决策——在3个月赛期内实现远程"零人工干预"闭环运营。</span></li>
-          <li><span data-lang="en" class="inline">Won the championship with profits 2× the runner-up; the first Chinese team to claim this title, covered by Zhejiang University official WeChat and mainstream domestic/international media (100k+ reads).</span><span data-lang="zh" class="inline">以2倍于亚军的利润赢得冠军；首支获此荣誉的中国代表队，获浙江大学官方微信及国内外主流媒体报道（阅读量10万+）。</span></li>
-        </ul>
+    <div class="pub-item book reveal">
+      <div class="pub-row">
+        <div class="pub-bar"></div>
+        <div class="pub-content">
+          <div class="pub-tags">
+            <span class="pub-tag" data-lang="en">Book Chapter</span><span class="pub-tag" data-lang="zh">专著章节</span>
+          </div>
+          <h4>Data-driven modeling for crop growth in plant factories</h4>
+          <p class="authors">Lin, Z., Wang, S., Fu, R., Ting, K. C., & Lin, T. — <em>Springer</em>, 2022</p>
+        </div>
       </div>
     </div>
-    <!-- GRO -->
-    <div class="timeline-item fade-in">
-      <span class="timeline-date">2022/12 – 2025/08</span>
-      <div class="timeline-card">
-        <h4>StrawberryGRO: Process-Based Growth and Harvest Modeling <span class="tag-badge research">Research</span></h4>
-        <ul>
-          <li><span data-lang="en" class="inline">Developed StrawberryGRO, the first process-based strawberry growth model for plant-factory, covering phenology, photosynthesis, assimilate partitioning, and periodic harvesting modules.</span><span data-lang="zh" class="inline">开发了首个面向植物工厂的基于过程的草莓生长模型StrawberryGRO，涵盖物候期、光合作用、同化物分配和周期性采收模块。</span></li>
-          <li><span data-lang="en" class="inline">Calibrated the model against long-cycle and light–temperature interaction datasets to simulate growth, cultivar response, and periodic harvesting.</span><span data-lang="zh" class="inline">利用长周期和光温交互数据集标定模型，模拟生长、品种响应与周期性采收。</span></li>
-        </ul>
-      </div>
-    </div>
-    <!-- Lettuce -->
-    <div class="timeline-item fade-in">
-      <span class="timeline-date">2021/12 – 2022/12</span>
-      <div class="timeline-card">
-        <h4>Multimodal Deep Learning for Lettuce Fresh-Weight Monitoring <span class="tag-badge research">Research</span></h4>
-        <ul>
-          <li><span data-lang="en" class="inline">Developed a multi-modal fusion deep-learning framework for automatic, non-destructive lettuce fresh-weight monitoring in plant factories.</span><span data-lang="zh" class="inline">开发了多模态融合深度学习框架，用于植物工厂中生菜鲜重的自动无损监测。</span></li>
-        </ul>
+    <div class="pub-item conf reveal">
+      <div class="pub-row">
+        <div class="pub-bar"></div>
+        <div class="pub-content">
+          <div class="pub-tags">
+            <span class="pub-tag" data-lang="en">Conference Presentations</span><span class="pub-tag" data-lang="zh">会议报告</span>
+          </div>
+          <h4>🇪🇸 StrawberryGRO (Oral) — GreenSys 2025, Spain</h4>
+          <h4>🇺🇸 Strawberry Yield Prediction (Poster) — ASABE 2024, USA</h4>
+          <h4>🇺🇸 Strawberry Production Optimization (Oral) — ASABE 2024, USA</h4>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Publications ===== -->
-<section class="section" id="publications" style="background: linear-gradient(180deg, transparent, rgba(26,54,93,0.03), transparent);">
-  <div class="section-header">
-    <h2 data-lang="en">Publications & Achievements</h2>
-    <h2 data-lang="zh">论文与成果</h2>
-    <div class="divider"></div>
-    <p data-lang="en">Peer-reviewed journals, conference presentations, and book chapter.</p>
-    <p data-lang="zh">同行评审期刊、会议报告与专著章节。</p>
-  </div>
-  <div class="pub-grid">
-    <!-- GRO-E -->
-    <div class="pub-card accepted fade-in">
-      <div class="pub-meta">
-        <span class="pub-type" data-lang="en" class="inline">Journal (Accepted)</span>
-        <span class="pub-type" data-lang="zh" class="inline">期刊（已录用）</span>
-        <span class="pub-journal">Computers and Electronics in Agriculture</span>
-        <span class="pub-if">SCI Q1 Top · IF=8.9</span>
-      </div>
-      <h4>Fu, R., Liu, W., Xia, F., & Lin, T.* StrawberryGRO-E: A techno-economic analytic modeling framework for strawberry production in plant factories.</h4>
-      <p class="pub-authors" data-lang="en">First author · Corresponding author: Prof. Tao Lin</p>
-      <p class="pub-authors" data-lang="zh">第一作者 · 通讯作者：林涛教授</p>
-    </div>
-    <!-- GRO -->
-    <div class="pub-card revision fade-in">
-      <div class="pub-meta">
-        <span class="pub-type" data-lang="en" class="inline">Journal (Minor Revision)</span>
-        <span class="pub-type" data-lang="zh" class="inline">期刊（小修）</span>
-        <span class="pub-journal">Computers and Electronics in Agriculture</span>
-        <span class="pub-if">SCI Q1 Top · IF=8.9</span>
-      </div>
-      <h4>Fu, R., Hua, G., Ting, K., & Lin, T.* StrawberryGRO: A dynamic process-based model for simulating strawberry growth and periodic harvesting in plant factories.</h4>
-      <p class="pub-authors" data-lang="en">First author · Corresponding author: Prof. Tao Lin</p>
-      <p class="pub-authors" data-lang="zh">第一作者 · 通讯作者：林涛教授</p>
-    </div>
-    <!-- Frontiers -->
-    <div class="pub-card fade-in">
-      <div class="pub-meta">
-        <span class="pub-type" data-lang="en" class="inline">Journal (Published)</span>
-        <span class="pub-type" data-lang="zh" class="inline">期刊（已发表）</span>
-        <span class="pub-journal">Frontiers in Plant Science</span>
-        <span class="pub-if">SCI Q1 · IF=5.3</span>
-      </div>
-      <h4>Lin, Z., Fu, R., Ren, G., Zhong, R., Ying, Y., & Lin, T. (2022). Automatic monitoring of lettuce fresh weight by multi-modal fusion based deep learning. Frontiers in Plant Science, 13, 980581.</h4>
-      <p class="pub-authors" data-lang="en">Second author</p>
-      <p class="pub-authors" data-lang="zh">第二作者</p>
-    </div>
-    <!-- Book Chapter -->
-    <div class="pub-card fade-in">
-      <div class="pub-meta">
-        <span class="pub-type" data-lang="en" class="inline">Book Chapter</span>
-        <span class="pub-type" data-lang="zh" class="inline">专著章节</span>
-      </div>
-      <h4>Lin, Z., Wang, S., Fu, R., Ting, K. C., & Lin, T. (2022). Data-driven modeling for crop growth in plant factories. In Sensing, data managing, and control technologies for agricultural systems. Springer.</h4>
-    </div>
-    <!-- Conference -->
-    <div class="pub-card fade-in" style="border-left-color: var(--accent-light);">
-      <div class="pub-meta">
-        <span class="pub-type" data-lang="en" class="inline">Conference Presentations</span>
-        <span class="pub-type" data-lang="zh" class="inline">会议报告</span>
-      </div>
-      <h4>1. StrawberryGRO: a dynamic strawberry growth model for plant factory (Oral). GreenSys 2025, Almeria, Spain.</h4>
-      <h4>2. Enhanced Strawberry Yield Prediction (Poster). ASABE 2024, Anaheim, USA.</h4>
-      <h4>3. Optimizing Strawberry Production in Plant Factories (Oral). ASABE 2024, Anaheim, USA.</h4>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Awards ===== -->
+<!-- Awards -->
 <section class="section" id="awards">
-  <div class="section-header">
-    <h2 data-lang="en">Honors & Awards</h2>
-    <h2 data-lang="zh">荣誉与奖项</h2>
-    <div class="divider"></div>
+  <div class="section-title reveal">
+    <span class="num">04</span>
+    <h2>Honors & <span class="accent">Awards</span></h2>
+    <div class="line"></div>
   </div>
   <div class="awards-grid">
-    <div class="award-card fade-in">
+    <div class="award-card reveal">
       <div class="award-icon">🏆</div>
-      <h4 data-lang="en">Champion, 4th International Autonomous Greenhouse Challenge</h4>
-      <h4 data-lang="zh">第四届国际自主温室挑战赛 冠军</h4>
+      <h4>Champion<br>Autonomous Greenhouse Challenge</h4>
       <p>WUR/Tencent · 2024</p>
     </div>
-    <div class="award-card fade-in">
+    <div class="award-card reveal delay-1">
       <div class="award-icon">⭐</div>
-      <h4 data-lang="en">Outstanding Graduate Student Award</h4>
-      <h4 data-lang="zh">优秀研究生奖</h4>
+      <h4>Outstanding Graduate Student</h4>
       <p>Zhejiang University · 2024 & 2025</p>
     </div>
-    <div class="award-card fade-in">
+    <div class="award-card reveal delay-2">
       <div class="award-icon">🥈</div>
-      <h4 data-lang="en">Silver Award, "Internet+" Innovation & Entrepreneurship Competition</h4>
-      <h4 data-lang="zh">"互联网+"创新创业大赛 银奖</h4>
-      <p data-lang="en">Zhejiang Provincial International</p>
-      <p data-lang="zh">浙江省国际赛</p>
+      <h4>Silver Award<br>"Internet+" Competition</h4>
+      <p>Zhejiang Provincial · </p>
     </div>
-    <div class="award-card fade-in">
+    <div class="award-card reveal delay-3">
       <div class="award-icon">📚</div>
-      <h4 data-lang="en">Kang'erda Scholarship</h4>
-      <h4 data-lang="zh">康尔达奖学金</h4>
+      <h4>Kang'erda Scholarship</h4>
       <p>Zhejiang University</p>
     </div>
   </div>
 </section>
 
-<!-- ===== Skills ===== -->
+<!-- Skills - Tabbed with Animated Bars -->
 <section class="section" id="skills">
-  <div class="section-header">
-    <h2 data-lang="en">Skills</h2>
-    <h2 data-lang="zh">技能</h2>
-    <div class="divider"></div>
+  <div class="section-title reveal">
+    <span class="num">05</span>
+    <h2>Skills & <span class="accent">Toolkit</span></h2>
+    <div class="line"></div>
   </div>
-  <div class="skills-container">
-    <div class="skill-card fade-in">
-      <h4>🐍 Programming & Tools</h4>
-      <div class="skill-tags">
-        <span class="skill-tag highlight">Python</span>
-        <span class="skill-tag">PyTorch</span>
-        <span class="skill-tag">scikit-learn</span>
-        <span class="skill-tag">OpenCV</span>
-        <span class="skill-tag">MATLAB</span>
-        <span class="skill-tag">SQL</span>
-        <span class="skill-tag">Git</span>
-        <span class="skill-tag">Docker</span>
-      </div>
+  <div class="skills-tabs reveal">
+    <button class="skill-tab active" onclick="switchSkill('ai')">🤖 AI & LLM</button>
+    <button class="skill-tab" onclick="switchSkill('dev')">💻 Programming</button>
+    <button class="skill-tab" onclick="switchSkill('domain')">🌾 Domain</button>
+    <button class="skill-tab" onclick="switchSkill('lang')">🌍 Languages</button>
+  </div>
+
+  <div class="skill-panel active" id="skill-ai">
+    <div class="skill-bars">
+      <div class="skill-bar"><span class="name">LangChain / LangGraph</span><div class="track"><div class="fill" data-pct="85"></div></div><span class="pct">85%</span></div>
+      <div class="skill-bar"><span class="name">Multi-Agent Systems</span><div class="track"><div class="fill" data-pct="80"></div></div><span class="pct">80%</span></div>
+      <div class="skill-bar"><span class="name">Deep Learning (PyTorch)</span><div class="track"><div class="fill" data-pct="88"></div></div><span class="pct">88%</span></div>
+      <div class="skill-bar"><span class="name">Multi-modal Learning</span><div class="track"><div class="fill" data-pct="82"></div></div><span class="pct">82%</span></div>
+      <div class="skill-bar"><span class="name">Gaussian Splatting</span><div class="track"><div class="fill" data-pct="75"></div></div><span class="pct">75%</span></div>
+      <div class="skill-bar"><span class="name">OpenCV / scikit-learn</span><div class="track"><div class="fill" data-pct="85"></div></div><span class="pct">85%</span></div>
     </div>
-    <div class="skill-card fade-in">
-      <h4>🤖 AI & LLM Agents</h4>
-      <div class="skill-tags">
-        <span class="skill-tag highlight">LangChain / LangGraph</span>
-        <span class="skill-tag">Multi-Agent Systems</span>
-        <span class="skill-tag">LLM / Agent Workflows</span>
-        <span class="skill-tag">Deep Learning</span>
-        <span class="skill-tag">Multi-modal Learning</span>
-        <span class="skill-tag">Gaussian Splatting</span>
-        <span class="skill-tag">Reinforcement Learning</span>
-      </div>
+  </div>
+
+  <div class="skill-panel" id="skill-dev">
+    <div class="skill-bars">
+      <div class="skill-bar"><span class="name">Python</span><div class="track"><div class="fill" data-pct="90"></div></div><span class="pct">90%</span></div>
+      <div class="skill-bar"><span class="name">MATLAB</span><div class="track"><div class="fill" data-pct="78"></div></div><span class="pct">78%</span></div>
+      <div class="skill-bar"><span class="name">SQL</span><div class="track"><div class="fill" data-pct="70"></div></div><span class="pct">70%</span></div>
+      <div class="skill-bar"><span class="name">Git</span><div class="track"><div class="fill" data-pct="80"></div></div><span class="pct">80%</span></div>
+      <div class="skill-bar"><span class="name">Docker</span><div class="track"><div class="fill" data-pct="65"></div></div><span class="pct">65%</span></div>
     </div>
-    <div class="skill-card fade-in">
-      <h4>🌾 Domain Expertise</h4>
-      <div class="skill-tags">
-        <span class="skill-tag highlight">Crop / Process Modeling</span>
-        <span class="skill-tag">Digital Twins</span>
-        <span class="skill-tag">Controlled-Environment Agriculture</span>
-        <span class="skill-tag">Techno-Economic Analysis</span>
-        <span class="skill-tag">3D Reconstruction</span>
-        <span class="skill-tag">Autonomous Greenhouse Control</span>
-      </div>
+  </div>
+
+  <div class="skill-panel" id="skill-domain">
+    <div class="skill-bars">
+      <div class="skill-bar"><span class="name">Crop / Process Modeling</span><div class="track"><div class="fill" data-pct="92"></div></div><span class="pct">92%</span></div>
+      <div class="skill-bar"><span class="name">Digital Twins</span><div class="track"><div class="fill" data-pct="85"></div></div><span class="pct">85%</span></div>
+      <div class="skill-bar"><span class="name">CEA / Plant Factory</span><div class="track"><div class="fill" data-pct="90"></div></div><span class="pct">90%</span></div>
+      <div class="skill-bar"><span class="name">Techno-Economic Analysis</span><div class="track"><div class="fill" data-pct="82"></div></div><span class="pct">82%</span></div>
+      <div class="skill-bar"><span class="name">3D Reconstruction</span><div class="track"><div class="fill" data-pct="75"></div></div><span class="pct">75%</span></div>
     </div>
-    <div class="skill-card fade-in">
-      <h4>🌍 Languages</h4>
-      <div class="skill-tags">
-        <span class="skill-tag highlight">Mandarin (Native)</span>
-        <span class="skill-tag">English (CET-6: 606)</span>
-        <span class="skill-tag">French (Basic)</span>
-      </div>
+  </div>
+
+  <div class="skill-panel" id="skill-lang">
+    <div class="skill-bars">
+      <div class="skill-bar"><span class="name">Mandarin</span><div class="track"><div class="fill" data-pct="100"></div></div><span class="pct">Native</span></div>
+      <div class="skill-bar"><span class="name">English (CET-6: 606)</span><div class="track"><div class="fill" data-pct="80"></div></div><span class="pct">80%</span></div>
+      <div class="skill-bar"><span class="name">French</span><div class="track"><div class="fill" data-pct="30"></div></div><span class="pct">30%</span></div>
     </div>
   </div>
 </section>
 
-<!-- ===== Contact ===== -->
+<!-- Contact -->
 <section class="section" id="contact">
-  <div class="section-header">
-    <h2 data-lang="en">Contact</h2>
-    <h2 data-lang="zh">联系方式</h2>
-    <div class="divider"></div>
-    <p data-lang="en">Feel free to reach out for collaboration, academic inquiries, or industry opportunities.</p>
-    <p data-lang="zh">欢迎联系我，探讨学术合作或业界机会。</p>
+  <div class="section-title reveal">
+    <span class="num">06</span>
+    <h2>Get in <span class="accent">Touch</span></h2>
+    <div class="line"></div>
+    <p data-lang="en">Open to visiting positions, collaborations, and industry opportunities</p>
+    <p data-lang="zh">欢迎联系，探讨联培合作、学术交流或业界机会</p>
   </div>
-  <div style="max-width:600px;margin:0 auto;">
-    <div class="about-card fade-in" style="text-align:center;padding:40px;">
-      <h3 style="justify-content:center;font-size:22px;">📬 <span data-lang="en" class="inline">Get in Touch</span><span data-lang="zh" class="inline">与我联系</span></h3>
-      <div style="margin-top:20px;">
-        <div class="info-row" style="justify-content:center;">
-          <span class="info-label">Email</span>
-          <span class="info-value"><a href="mailto:Rongmei_fu@zju.edu.cn">Rongmei_fu@zju.edu.cn</a></span>
+  <div class="contact-wrap">
+    <div class="contact-card reveal">
+      <div class="icon-big">📬</div>
+      <h3>Let's Connect</h3>
+      <p class="sub" data-lang="en">Whether it's research collaboration, a visiting position, or an industry role — I'd love to hear from you.</p>
+      <p class="sub" data-lang="zh">无论是科研合作、联培机会还是业界岗位——期待与您交流。</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <span class="ci-icon">📧</span>
+          <div>
+            <div class="ci-label">Email</div>
+            <div class="ci-value"><a href="mailto:Rongmei_fu@zju.edu.cn">Rongmei_fu@zju.edu.cn</a></div>
+          </div>
         </div>
-        <div class="info-row" style="justify-content:center;">
-          <span class="info-label">Phone</span>
-          <span class="info-value">+86 135 8871 9472</span>
+        <div class="contact-item">
+          <span class="ci-icon">📱</span>
+          <div>
+            <div class="ci-label">Phone</div>
+            <div class="ci-value">+86 135 8871 9472</div>
+          </div>
         </div>
-        <div class="info-row" style="justify-content:center;">
-          <span class="info-label"><span data-lang="en" class="inline">Address</span><span data-lang="zh" class="inline">地址</span></span>
-          <span class="info-value"><span data-lang="en" class="inline">College of Biosystems Engineering and Food Science, Zhejiang University, 866 Yuhangtang Road, Hangzhou, Zhejiang 310058, China</span><span data-lang="zh" class="inline">浙江大学生物系统工程与食品科学学院，杭州市余杭塘路866号，邮编310058</span></span>
+        <div class="contact-item">
+          <span class="ci-icon">📍</span>
+          <div>
+            <div class="ci-label">Address</div>
+            <div class="ci-value" data-lang="en">Zhejiang University, Hangzhou, China</div>
+            <div class="ci-value" data-lang="zh">浙江大学，杭州</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Footer ===== -->
+<!-- Footer -->
 <footer class="footer">
-  <p>© 2026 Rongmei Fu · <span data-lang="en" class="inline">Zhejiang University</span><span data-lang="zh" class="inline">浙江大学</span></p>
-  <p style="margin-top:6px;font-size:13px;opacity:0.6;"><span data-lang="en" class="inline">Designed for academic and industry career opportunities</span><span data-lang="zh" class="inline">面向学术与业界职业发展</span></p>
+  <p>© 2026 Rongmei Fu · <span data-lang="en">Built with</span><span data-lang="zh">用</span> <span class="heart">♥</span> <span data-lang="en">and lots of</span><span data-lang="zh">和大量</span> ☕</p>
 </footer>
 
 <script>
-// Language toggle
+// ====== TYPING EFFECT ======
+const phrases = {
+  en: [
+    "I build crop models 🌱",
+    "I win greenhouse championships 🏆",
+    "I engineer AI agents 🤖",
+    "I bridge agriculture × AI × economics 📊"
+  ],
+  zh: [
+    "我构建作物模型 🌱",
+    "我赢得温室挑战赛冠军 🏆",
+    "我开发AI智能体系统 🤖",
+    "我连接农业 × AI × 经济学 📊"
+  ]
+};
+let pIdx = 0, cIdx = 0, deleting = false;
+function typeLoop() {
+  const lang = document.body.classList.contains('lang-zh') ? 'zh' : 'en';
+  const list = phrases[lang];
+  const current = list[pIdx];
+  const el = document.getElementById('typing');
+  if (!deleting) {
+    el.innerHTML = current.substring(0, cIdx + 1) + '<span class="cursor"></span>';
+    cIdx++;
+    if (cIdx === current.length) { deleting = true; setTimeout(typeLoop, 1800); return; }
+  } else {
+    el.innerHTML = current.substring(0, cIdx - 1) + '<span class="cursor"></span>';
+    cIdx--;
+    if (cIdx === 0) { deleting = false; pIdx = (pIdx + 1) % list.length; }
+  }
+  setTimeout(typeLoop, deleting ? 40 : 80);
+}
+typeLoop();
+
+// ====== PARTICLE BACKGROUND ======
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function initParticles() {
+  particles = [];
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      r: Math.random() * 3 + 1,
+      color: ['#0ea5e9', '#6366f1', '#10b981'][Math.floor(Math.random() * 3)]
+    });
+  }
+}
+initParticles();
+
+function drawParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach((p, i) => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = canvas.width;
+    if (p.x > canvas.width) p.x = 0;
+    if (p.y < 0) p.y = canvas.height;
+    if (p.y > canvas.height) p.y = 0;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = 0.3;
+    ctx.fill();
+    // Connect nearby particles
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = p.x - particles[j].x;
+      const dy = p.y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = p.color;
+        ctx.globalAlpha = (1 - dist / 120) * 0.15;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ====== SCROLL PROGRESS ======
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('scrollProgress').style.width = pct + '%';
+
+  // Timeline fill
+  const tl = document.querySelector('.timeline');
+  if (tl) {
+    const rect = tl.getBoundingClientRect();
+    const tlHeight = tl.offsetHeight;
+    const scrolled = Math.max(0, -rect.top + 200);
+    const fillPct = Math.min(100, (scrolled / tlHeight) * 100);
+    document.getElementById('timelineFill').style.height = fillPct + '%';
+  }
+
+  // Timeline dots
+  document.querySelectorAll('.timeline-dot').forEach(dot => {
+    const rect = dot.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.6) dot.classList.add('active');
+    else dot.classList.remove('active');
+  });
+});
+
+// ====== REVEAL ON SCROLL ======
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ====== SKILL BARS ======
+function animateSkills(panelId) {
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+  panel.querySelectorAll('.fill').forEach(f => {
+    const pct = f.dataset.pct;
+    f.style.width = pct + '%';
+  });
+}
+// Animate first tab on load
+setTimeout(() => animateSkills('skill-ai'), 500);
+
+function switchSkill(tab) {
+  document.querySelectorAll('.skill-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.skill-panel').forEach(p => p.classList.remove('active'));
+  event.target.closest('.skill-tab').classList.add('active');
+  const panel = document.getElementById('skill-' + tab);
+  panel.classList.add('active');
+  // Reset and re-animate
+  panel.querySelectorAll('.fill').forEach(f => f.style.width = '0');
+  setTimeout(() => animateSkills('skill-' + tab), 50);
+}
+
+// ====== THEME TOGGLE ======
+function toggleTheme() {
+  const body = document.body;
+  const isDark = body.getAttribute('data-theme') === 'dark';
+  body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+}
+
+// ====== LANG TOGGLE ======
 function toggleLang() {
   const body = document.body;
   if (body.classList.contains('lang-en')) {
@@ -785,30 +1246,34 @@ function toggleLang() {
   }
 }
 
-// Fade-in animation on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
+// ====== MODE SWITCH (Academic/Industry) ======
+function switchMode(mode) {
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.mode-content').forEach(c => c.classList.remove('active'));
+  event.target.closest('.mode-btn').classList.add('active');
+  document.querySelector(`[data-mode-content="${mode}"]`).classList.add('active');
+}
 
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+// ====== TIMELINE EXPAND ======
+function toggleExpand(card) {
+  card.classList.toggle('expanded');
+}
 
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
+// ====== CURSOR GLOW ======
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+// ====== SMOOTH SCROLL ======
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      const offset = 70;
-      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) window.scrollTo({ top: t.offsetTop - 60, behavior: 'smooth' });
   });
 });
 </script>
-
 </body>
 </html>
